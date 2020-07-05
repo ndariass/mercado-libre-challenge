@@ -1,0 +1,86 @@
+package com.example.mercadolibre_data.dto
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
+
+/**
+ * Data transfer object for the products API response
+ */
+data class ProductResponseDto @JsonCreator constructor(val results: List<ProductDto?>?) : Serializable {
+    companion object {
+        private val serialVersionUID: Long = 98962651L
+    }
+}
+
+/**
+ * Data transfer object for a product
+ *
+ * @author Nicolás Arias
+ */
+data class ProductDto @JsonCreator constructor(
+    val id: String?,
+    val title: String?,
+    val price: Float?,
+    @JsonProperty("currency_id")
+    val currencyId: String?,
+    @JsonProperty("available_quantity")
+    val availableQuantity: Int?,
+    val condition: String?,
+    val thumbnail: String?,
+    val installments: Installments?,
+    val address: Address?,
+    val shipping: Shipping?,
+    val attributes: List<Attribute?>?,
+    val originalPrice: Float?
+
+) : Serializable {
+    companion object {
+        private val serialVersionUID: Long = 1326841318L
+    }
+
+    data class Installments @JsonCreator constructor(
+        val quantity: Int?,
+        val amount: Float?,
+        @JsonProperty("currency_id")
+        val currencyId: String?
+    ) : Serializable {
+        companion object {
+            private val serialVersionUID: Long = 53453325L
+        }
+    }
+
+    data class Address @JsonCreator constructor(
+        @JsonProperty("state_name")
+        val stateName: String?,
+        @JsonProperty("city_name")
+        val cityName: String?
+    ) : Serializable {
+        companion object {
+            private val serialVersionUID: Long = 16897465L
+        }
+    }
+
+    data class Shipping @JsonCreator constructor(
+        @JsonProperty("free_shipping")
+        val freeShipping: Boolean?,
+        @JsonProperty("store_pick_up")
+        val storePickUp: Boolean?
+    ) : Serializable {
+        companion object {
+            private val serialVersionUID: Long = 6568471L
+        }
+    }
+
+    data class Attribute @JsonCreator constructor(
+        val name: String?,
+        @JsonProperty("value_name")
+        val valueName: String?
+    ) : Serializable {
+        companion object {
+            private val serialVersionUID: Long = 8798346516L
+        }
+    }
+
+}

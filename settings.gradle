@@ -1,2 +1,5 @@
+include ':mercadolibre-ui'
+include ':mercadolibre-data'
+include ':mercadolibre-domain'
 include ':app'
 rootProject.name = "ML Challenge"
