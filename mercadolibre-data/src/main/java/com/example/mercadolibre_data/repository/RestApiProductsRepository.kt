@@ -14,7 +14,7 @@ import javax.inject.Singleton
  * @author Nicolás Arias
  */
 @Singleton
-class RestApiProductRepository @Inject constructor(
+class RestApiProductsRepository @Inject constructor(
     private val restApi: ProductsRestApi,
     private val mapper: ProductMapper
 ) :

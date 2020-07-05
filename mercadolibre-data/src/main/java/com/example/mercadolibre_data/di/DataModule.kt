@@ -1,7 +1,8 @@
 package com.example.mercadolibre_data.di
 
 import com.example.mercadolibre_data.network.ProductsRestApi
-import com.example.mercadolibre_data.repository.RestApiProductRepository
+import com.example.mercadolibre_data.repository.RestApiProductsRepository
+import com.example.mercadolibre_domain.repository.ProductsRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -18,14 +19,14 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideProductRepository(restApiProductRepository: RestApiProductRepository) =
-        restApiProductRepository
+    fun provideProductRepository(restApiProductsRepository: RestApiProductsRepository): ProductsRepository =
+        restApiProductsRepository
 
     @Provides
     @Singleton
     fun provideProductRestApi(): ProductsRestApi {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl("api.mercadolibre.com/")
             .addConverterFactory(JacksonConverterFactory.create())
             .build()
 

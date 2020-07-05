@@ -3,7 +3,7 @@ package com.example.mercadolibre_data.repository
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
 import com.example.mercadolibre_data.network.ProductsRestApi
-import com.example.mercadolibre_data.repository.RestApiProductRepository.Companion.UNKNOWN_CAUSE
+import com.example.mercadolibre_data.repository.RestApiProductsRepository.Companion.UNKNOWN_CAUSE
 import com.example.mercadolibre_domain.model.Product
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -14,20 +14,20 @@ import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
+import org.mockito.MockitoAnnotations.initMocks
 import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
 
 /**
- * Unit tests for [RestApiProductRepository]
+ * Unit tests for [RestApiProductsRepository]
  *
  * @author Nicolás Arias
  */
-class RestApiProductRepositoryTest {
+class RestApiProductsRepositoryTest {
 
     @InjectMocks
-    private lateinit var subject: RestApiProductRepository
+    private lateinit var subject: RestApiProductsRepository
 
     @Mock
     private lateinit var restApi: ProductsRestApi
@@ -50,7 +50,7 @@ class RestApiProductRepositoryTest {
     @Before
     @Throws(Exception::class)
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        initMocks(this)
     }
 
     @Test
