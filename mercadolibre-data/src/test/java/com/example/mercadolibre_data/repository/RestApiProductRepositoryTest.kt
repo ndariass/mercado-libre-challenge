@@ -2,7 +2,6 @@ package com.example.mercadolibre_data.repository
 
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
-import com.example.mercadolibre_data.mapper.ProductMapper
 import com.example.mercadolibre_data.network.ProductsRestApi
 import com.example.mercadolibre_data.repository.RestApiProductRepository.Companion.UNKNOWN_CAUSE
 import com.example.mercadolibre_domain.model.Product
@@ -71,7 +70,7 @@ class RestApiProductRepositoryTest {
     }
 
     @Test
-    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsNotMapped_Then_ReturnResultWithoutPayload() {
+    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsNotMapped_Then_ReturnResultWithEmptyListPayload() {
         `when`(restApi.searchProducts("query")).thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
         `when`(apiResponse.isSuccessful).thenReturn(true)
@@ -82,6 +81,20 @@ class RestApiProductRepositoryTest {
             assertTrue(payload!!.isEmpty())
             assertTrue(successful)
             assertNull(errorMessage)
+        }
+    }
+
+    @Test
+    fun test_SearchProducts_Given_CallIsSuccessful_And_ResultFieldInResponseIsNull_Then_ReturnResultWithoutPayload() {
+        `when`(restApi.searchProducts("query")).thenReturn(call as Call<ProductResponseDto?>?)
+        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+        `when`(apiResponse.isSuccessful).thenReturn(true)
+        `when`(apiResponse.body()).thenReturn(ProductResponseDto(null))
+
+        subject.searchProducts("query").apply {
+            assertNull(payload)
+            assertFalse(successful)
+            assertEquals(UNKNOWN_CAUSE, errorMessage)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.mercadolibre_data.repository
 
-import com.example.mercadolibre_data.mapper.ProductMapper
 import com.example.mercadolibre_data.network.ProductsRestApi
 import com.example.mercadolibre_domain.model.Product
 import com.example.mercadolibre_domain.model.Response

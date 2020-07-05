@@ -1,4 +1,4 @@
-package com.example.mercadolibre_data.mapper
+package com.example.mercadolibre_data.repository
 
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_domain.model.Product
@@ -66,7 +66,7 @@ class ProductMapper @Inject constructor() {
     private fun mapAddress(address: ProductDto.Address?): String? {
         val result = listOf(address?.stateName, address?.cityName)
             .filter { !it.isNullOrBlank() }
-            .joinToString(",")
+            .joinToString(", ")
 
         return if (result.isEmpty()) null
         else result

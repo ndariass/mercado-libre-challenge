@@ -10,168 +10,27 @@
   "results": [
     {
       "id": "MCO481185321",
-      "site_id": "MCO",
       "title": "Motorola Moto G6 Octacore 32gb 3ram Huella 4g Dualcam 2018",
-      "seller": {
-        "id": 134920461,
-        "permalink": null,
-        "power_seller_status": "platinum",
-        "car_dealer": false,
-        "real_estate_agency": false,
-        "tags": []
-      },
       "price": 599900,
       "currency_id": "COP",
-      "available_quantity": 1,
-      "sold_quantity": 0,
-      "buying_mode": "buy_it_now",
-      "listing_type_id": "gold_special",
-      "stop_time": "2038-08-10T04:00:00.000Z",
-      "condition": "used",
-      "permalink": "https://articulo.mercadolibre.com.co/MCO-481185321-motorola-moto-g6-octacore-32gb-3ram-huella-4g-dualcam-2018-_JM",
-      "thumbnail": "http://mco-s2-p.mlstatic.com/736765-MCO31544518191_072019-I.jpg",
-      "accepts_mercadopago": true,
-      "installments": {
-        "quantity": 36,
-        "amount": 16663.89,
-        "rate": 0,
-        "currency_id": "COP"
-      },
       "address": {
         "state_id": "CO-DC",
-        "state_name": "Bogotá D.C.",
+        "state_name": null,
         "city_id": "TUNPQ1VTQTY3MTQ1",
         "city_name": "Usaquén"
-      },
-      "shipping": {
-        "free_shipping": true,
-        "mode": "me2",
-        "tags": [],
-        "logistic_type": "drop_off",
-        "store_pick_up": false
-      },
-      "seller_address": {
-        "id": "",
-        "comment": "",
-        "address_line": "",
-        "zip_code": "",
-        "country": {
-          "id": "CO",
-          "name": "Colombia"
-        },
-        "state": {
-          "id": "CO-DC",
-          "name": "Bogotá D.C."
-        },
-        "city": {
-          "id": "TUNPQ1VTQTY3MTQ1",
-          "name": "Usaquén"
-        },
-        "latitude": "",
-        "longitude": ""
-      },
-      "attributes": [
-        {
-          "id": "BRAND",
-          "value_id": "2503",
-          "values": [
-            {
-              "id": "2503",
-              "name": "Motorola",
-              "struct": null,
-              "source": 1
-            }
-          ],
-          "attribute_group_id": "OTHERS",
-          "source": 1,
-          "name": "Marca",
-          "value_name": "Motorola",
-          "value_struct": null,
-          "attribute_group_name": "Otros"
-        },
-        {
-          "source": 1572,
-          "id": "ITEM_CONDITION",
-          "value_id": "2230581",
-          "value_name": "Usado",
-          "value_struct": null,
-          "attribute_group_id": "OTHERS",
-          "attribute_group_name": "Otros",
-          "name": "Condición del ítem",
-          "values": [
-            {
-              "id": "2230581",
-              "name": "Usado",
-              "struct": null,
-              "source": 1572
-            }
-          ]
-        },
-        {
-          "id": "LINE",
-          "value_id": "59187",
-          "value_name": "Moto",
-          "attribute_group_name": "Otros",
-          "name": "Línea",
-          "value_struct": null,
-          "values": [
-            {
-              "id": "59187",
-              "name": "Moto",
-              "struct": null,
-              "source": 1000427007642219
-            }
-          ],
-          "attribute_group_id": "OTHERS",
-          "source": 1000427007642219
-        },
-        {
-          "value_id": "483571",
-          "value_name": "G6 Dual SIM",
-          "value_struct": null,
-          "attribute_group_name": "Otros",
-          "source": 1000427007642219,
-          "id": "MODEL",
-          "name": "Modelo",
-          "values": [
-            {
-              "id": "483571",
-              "name": "G6 Dual SIM",
-              "struct": null,
-              "source": 1000427007642219
-            }
-          ],
-          "attribute_group_id": "OTHERS"
-        },
-        {
-          "value_id": "6936759",
-          "value_struct": null,
-          "attribute_group_id": "OTHERS",
-          "attribute_group_name": "Otros",
-          "id": "PROCESSOR_MODEL",
-          "name": "Modelo del procesador",
-          "value_name": "Snapdragon 450",
-          "values": [
-            {
-              "id": "6936759",
-              "name": "Snapdragon 450",
-              "struct": null,
-              "source": 1183438784296846
-            }
-          ],
-          "source": 1183438784296846
-        }
-      ],
-      "original_price": 900000,
-      "category_id": "MCO1055",
-      "official_store_id": null,
-      "domain_id": "MCO-CELLPHONES",
-      "catalog_product_id": "MCO9652758",
-      "tags": [
-        "good_quality_picture",
-        "immediate_payment",
-        "cart_eligible"
-      ]
+      }
+    },
+    {
+      "id": "MCO481185322",
+      "title": "Motorola Moto G6 Octacore 32gb 3ram Huella 4g Dualcam 2018",
+      "price": 599900,
+      "currency_id": "COP",
+      "address": {
+        "state_id": "CO-DC",
+        "state_name": "Bogotá, D.C",
+        "city_id": "TUNPQ1VTQTY3MTQ1",
+        "city_name": "  "
+      }
     }
   ],
   "secondary_results": [],

@@ -8,7 +8,7 @@ import java.io.Serializable
 /**
  * Data transfer object for the products API response
  */
-data class ProductResponseDto @JsonCreator constructor(val results: List<ProductDto?>?) : Serializable {
+data class ProductResponseDto constructor(val results: List<ProductDto?>?) : Serializable {
     companion object {
         private val serialVersionUID: Long = 98962651L
     }
@@ -19,7 +19,7 @@ data class ProductResponseDto @JsonCreator constructor(val results: List<Product
  *
  * @author Nicolás Arias
  */
-data class ProductDto @JsonCreator constructor(
+data class ProductDto constructor(
     val id: String?,
     val title: String?,
     val price: Float?,
@@ -33,6 +33,7 @@ data class ProductDto @JsonCreator constructor(
     val address: Address?,
     val shipping: Shipping?,
     val attributes: List<Attribute?>?,
+    @JsonProperty("original_price")
     val originalPrice: Float?
 
 ) : Serializable {
@@ -40,7 +41,7 @@ data class ProductDto @JsonCreator constructor(
         private val serialVersionUID: Long = 1326841318L
     }
 
-    data class Installments @JsonCreator constructor(
+    data class Installments constructor(
         val quantity: Int?,
         val amount: Float?,
         @JsonProperty("currency_id")
@@ -51,7 +52,7 @@ data class ProductDto @JsonCreator constructor(
         }
     }
 
-    data class Address @JsonCreator constructor(
+    data class Address constructor(
         @JsonProperty("state_name")
         val stateName: String?,
         @JsonProperty("city_name")
@@ -62,7 +63,7 @@ data class ProductDto @JsonCreator constructor(
         }
     }
 
-    data class Shipping @JsonCreator constructor(
+    data class Shipping constructor(
         @JsonProperty("free_shipping")
         val freeShipping: Boolean?,
         @JsonProperty("store_pick_up")
@@ -73,7 +74,7 @@ data class ProductDto @JsonCreator constructor(
         }
     }
 
-    data class Attribute @JsonCreator constructor(
+    data class Attribute constructor(
         val name: String?,
         @JsonProperty("value_name")
         val valueName: String?

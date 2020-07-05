@@ -27,21 +27,21 @@
       "buying_mode": "buy_it_now",
       "listing_type_id": "gold_special",
       "stop_time": "2038-08-10T04:00:00.000Z",
-      "condition": "used",
+      "condition": "unknown-condition",
       "permalink": "https://articulo.mercadolibre.com.co/MCO-481185321-motorola-moto-g6-octacore-32gb-3ram-huella-4g-dualcam-2018-_JM",
       "thumbnail": "http://mco-s2-p.mlstatic.com/736765-MCO31544518191_072019-I.jpg",
       "accepts_mercadopago": true,
       "installments": {
         "quantity": 36,
-        "amount": 16663.89,
+        "amount": null,
         "rate": 0,
-        "currency_id": "COP"
+        "currency_id": null
       },
       "address": {
         "state_id": "CO-DC",
-        "state_name": "Bogotá D.C.",
+        "state_name": "",
         "city_id": "TUNPQ1VTQTY3MTQ1",
-        "city_name": "Usaquén"
+        "city_name": null
       },
       "shipping": {
         "free_shipping": true,
@@ -84,8 +84,8 @@
           ],
           "attribute_group_id": "OTHERS",
           "source": 1,
-          "name": "Marca",
-          "value_name": "Motorola",
+          "name": "",
+          "value_name": "",
           "value_struct": null,
           "attribute_group_name": "Otros"
         },
@@ -93,11 +93,11 @@
           "source": 1572,
           "id": "ITEM_CONDITION",
           "value_id": "2230581",
-          "value_name": "Usado",
+          "value_name": null,
           "value_struct": null,
           "attribute_group_id": "OTHERS",
           "attribute_group_name": "Otros",
-          "name": "Condición del ítem",
+          "name": null,
           "values": [
             {
               "id": "2230581",
@@ -110,9 +110,9 @@
         {
           "id": "LINE",
           "value_id": "59187",
-          "value_name": "Moto",
+          "value_name": "   ",
           "attribute_group_name": "Otros",
-          "name": "Línea",
+          "name": null,
           "value_struct": null,
           "values": [
             {
@@ -127,12 +127,12 @@
         },
         {
           "value_id": "483571",
-          "value_name": "G6 Dual SIM",
+          "value_name": null,
           "value_struct": null,
           "attribute_group_name": "Otros",
           "source": 1000427007642219,
           "id": "MODEL",
-          "name": "Modelo",
+          "name": "",
           "values": [
             {
               "id": "483571",
@@ -149,8 +149,8 @@
           "attribute_group_id": "OTHERS",
           "attribute_group_name": "Otros",
           "id": "PROCESSOR_MODEL",
-          "name": "Modelo del procesador",
-          "value_name": "Snapdragon 450",
+          "name": "",
+          "value_name": null,
           "values": [
             {
               "id": "6936759",
