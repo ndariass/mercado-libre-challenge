@@ -19,12 +19,20 @@ class ProductsSearchActivity : AppCompatActivity() {
     @Inject
     lateinit var productsRepository: ProductsRepository
 
+    @Inject
+    lateinit var myTestClass2: MyTestClass2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_search)
 
-        val task = object : AsyncTask<Unit, Unit, Unit>() {
+        myTestClass2.method1()
+        runTask()
+    }
+
+    private fun runTask() {
+        object : AsyncTask<Unit, Unit, Unit>() {
             override fun onProgressUpdate(vararg values: Unit?) {
 
             }
@@ -32,7 +40,7 @@ class ProductsSearchActivity : AppCompatActivity() {
             override fun doInBackground(vararg p0: Unit?) {
                 val result = productsRepository.searchProducts("Huawei PSmart")
                 Log.d(javaClass.name, "++++++")
-                Log.d(javaClass.name, result?.toString())
+                Log.d(javaClass.name, "++++++$result")
             }
 
             override fun onPostExecute(result: Unit?) {

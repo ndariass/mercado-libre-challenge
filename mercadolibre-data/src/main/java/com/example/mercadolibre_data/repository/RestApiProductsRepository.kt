@@ -29,7 +29,7 @@ class RestApiProductsRepository @Inject constructor(
      */
     override fun searchProducts(query: String): Response<List<Product>> {
         return try {
-            val apiResponse = restApi.searchProducts(query)?.execute()
+            val apiResponse = restApi.searchProducts(query = query)?.execute()
 
             return if (apiResponse?.isSuccessful == true) {
                 apiResponse

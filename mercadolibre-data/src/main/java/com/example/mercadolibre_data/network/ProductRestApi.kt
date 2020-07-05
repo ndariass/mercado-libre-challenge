@@ -20,7 +20,7 @@ interface ProductsRestApi {
 
     @GET("sites/{site}/search")
     fun searchProducts(
-        @Query("q") query: String,
-        @Path("site") site: String = DEFAULT_SITE
+        @Path("site") site: String = DEFAULT_SITE,
+        @Query("q") query: String
     ): Call<ProductResponseDto?>?
 }
