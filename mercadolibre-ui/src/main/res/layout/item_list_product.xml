@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/item_list_product_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <ImageView
+        android:id="@+id/item_list_thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@id/item_list_product_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/abc_vector_test" />
+
+    <TextView
+        android:id="@+id/item_list_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/item_list_product_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/item_list_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/item_list_product_guideline"
+        app:layout_constraintTop_toBottomOf="@id/item_list_title"
+        tools:text="150.000" />
+
+    <TextView
+        android:id="@+id/item_list_installments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/item_list_product_guideline"
+        app:layout_constraintTop_toBottomOf="@id/item_list_price"
+        tools:text="150.000" />
+
+    <TextView
+        android:id="@+id/item_list_free_shipping"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/item_list_product_guideline"
+        app:layout_constraintTop_toBottomOf="@id/item_list_installments"
+        tools:text="Envío gratis" />
+
+    <TextView
+        android:id="@+id/item_list_condition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/item_list_product_guideline"
+        app:layout_constraintTop_toBottomOf="@id/item_list_free_shipping"
+        tools:text="Usado" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
