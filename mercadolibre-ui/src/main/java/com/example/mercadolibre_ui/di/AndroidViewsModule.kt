@@ -1,6 +1,7 @@
 package com.example.mercadolibre_ui.di
 
 import com.example.mercadolibre_ui.activity.ProductsSearchActivity
+import com.example.mercadolibre_ui.fragment.ProductsSearchFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,6 +13,5 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class AndroidViewsModule {
 
-    @ContributesAndroidInjector
-    abstract fun bindProductsSearchActivity(): ProductsSearchActivity
+
 }

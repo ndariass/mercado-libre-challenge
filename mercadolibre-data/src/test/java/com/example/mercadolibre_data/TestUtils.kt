@@ -14,7 +14,7 @@ object TestUtils {
     }
 
     fun <T> readFromFile(path: String, clazz: Class<T>): T {
-        val file = File(javaClass.getResource(path).file)
+        val file = File(javaClass.getResource(path)!!.file)
         return objectMapper.readValue(file, clazz)
     }
 

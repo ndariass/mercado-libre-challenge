@@ -1,9 +1,16 @@
 package com.example.mercadolibre_ui.di
 
-import com.example.mercadolibre_ui.activity.MyTestClass2
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.mercadolibre_ui.activity.ProductsSearchActivity
+import com.example.mercadolibre_ui.fragment.ProductsSearchFragment
+import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
+import com.example.mercadolibre_ui.viewmodel.ViewModelFactory
+import com.example.mercadolibre_ui.viewmodel.ViewModelKey
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
 
 /**
  * Dagger module class for the UI layer
@@ -11,9 +18,19 @@ import javax.inject.Singleton
  * @author Nicolás Arias
  */
 @Module
-class UiModule {
+abstract class UiModule {
 
-    @Singleton
-    @Provides
-    fun provideMyTestClass2() = MyTestClass2()
+    @Binds
+    abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProductsSearchViewModel::class)
+    abstract fun bindOrdersViewModel(productsSearchViewModel: ProductsSearchViewModel): ViewModel
+
+    @ContributesAndroidInjector
+    abstract fun bindProductsSearchActivity(): ProductsSearchActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindProductsSearchFragment(): ProductsSearchFragment
 }

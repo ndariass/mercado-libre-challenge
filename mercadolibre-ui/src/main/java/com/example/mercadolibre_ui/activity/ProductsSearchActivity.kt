@@ -19,15 +19,11 @@ class ProductsSearchActivity : AppCompatActivity() {
     @Inject
     lateinit var productsRepository: ProductsRepository
 
-    @Inject
-    lateinit var myTestClass2: MyTestClass2
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_search)
 
-        myTestClass2.method1()
         runTask()
     }
 
