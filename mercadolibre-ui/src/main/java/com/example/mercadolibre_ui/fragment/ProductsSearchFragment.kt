@@ -15,13 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.adapter.ProductsAdapter
 import com.example.mercadolibre_ui.manager.ProductsUiManager
+import com.example.mercadolibre_ui.util.hideKeyboard
 import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
 import com.example.mercadolibre_ui.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_error
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_input_text
+import kotlinx.android.synthetic.main.fragment_products_search.products_search_loader
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_recycler_view
-import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_input_text
+import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_error
 import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_recycler_view
 import javax.inject.Inject
 
@@ -77,12 +79,23 @@ class ProductsSearchFragment : Fragment() {
             adapter = productsAdapter
         }
 
-        //TODO: handle input focus
         //TODO: avoid reloading on rotate. Why is this happening
         products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.searchProducts(textView.text.toString())
-                true
+                hideKeyboard(view)
+                products_search_input_text.clearFocus()
+
+                val query = textView.text.toString()
+
+                if (query.isBlank()) {
+                    false
+                } else {
+                    products_search_loader.visibility = VISIBLE
+                    products_search_recycler_view.visibility = GONE
+                    products_search_error.visibility = GONE
+                    viewModel.searchProducts(query)
+                    true
+                }
             } else {
                 false
             }
@@ -96,12 +109,14 @@ class ProductsSearchFragment : Fragment() {
             products_search_recycler_view.layoutManager?.scrollToPosition(0)
             productsAdapter.data = it
             products_search_error.visibility = GONE
+            products_search_loader.visibility = GONE
             products_search_recycler_view.visibility = VISIBLE
         })
 
         viewModel.error.observe(viewLifecycleOwner, Observer {
             products_search_error.text = it
             products_search_error.visibility = VISIBLE
+            products_search_loader.visibility = GONE
             products_search_recycler_view.visibility = GONE
         })
     }

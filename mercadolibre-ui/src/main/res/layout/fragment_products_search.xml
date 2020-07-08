@@ -2,9 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/products_search_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:focusableInTouchMode="true"
     tools:context=".fragment.ProductsSearchFragment">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -47,5 +49,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/products_search_input_layout"
         tools:text="Hubo un error en la búsuqeda, inténtalo nuevamente" />
+
+    <ProgressBar
+        android:id="@+id/products_search_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/products_search_input_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

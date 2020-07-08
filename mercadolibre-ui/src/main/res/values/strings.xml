@@ -1,4 +1,5 @@
 <resources>
+    <!-- Products search screen -->
     <string name="products_search_error_not_found">Tu búsuqeda no arrojó resultados</string>
     <string name="products_search_error_network">Revisa tu conexión a internet y vuelve a intentarlo</string>
     <string name="products_search_error_general">Hubo un error al realizar la búsqueda. Inténtalo de nuevo</string>
@@ -13,4 +14,7 @@
         <item quantity="one">%d vendido</item>
         <item quantity="other">%d vendidos</item>
     </plurals>
+
+    <!-- Product detail screen -->
+    <string name="product_detail_purchase">Comprar</string>
 </resources>

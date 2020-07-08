@@ -27,23 +27,8 @@ class ProductsSearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_search)
 
-        //TODO: navigate to fragment
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(
-                    R.id.fragment_container,
-                    ProductsSearchFragment.newInstance(),
-                    PRODUCTS_SEARCH_FRAGMENT_TAG
-                )
-                .setCustomAnimations(
-                    R.anim.fragment_open_enter,
-                    R.anim.fragment_close_exit,
-                    R.anim.fragment_fade_enter,
-                    R.anim.fragment_fade_exit
-                )
-                .commit()
-            //TODO allow state loss?
-        }
+        addFirstFragment(savedInstanceState)
+        addFirstFragmentV2(savedInstanceState)
         //TODO: need to handle else?
 
         productsSearchViewModel.productDetailNavigation.observe(this, Observer {
@@ -63,6 +48,25 @@ class ProductsSearchActivity : AppCompatActivity() {
                 //TODO allowing state loss?
                 .commit()
         })
+    }
+
+    private fun addFirstFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(
+                    R.id.fragment_container,
+                    ProductsSearchFragment.newInstance(),
+                    PRODUCTS_SEARCH_FRAGMENT_TAG
+                )
+                .setCustomAnimations(
+                    R.anim.fragment_open_enter,
+                    R.anim.fragment_close_exit,
+                    R.anim.fragment_fade_enter,
+                    R.anim.fragment_fade_exit
+                )
+                .commit()
+            //TODO allow state loss?
+        }
     }
 
     override fun onDestroy() {

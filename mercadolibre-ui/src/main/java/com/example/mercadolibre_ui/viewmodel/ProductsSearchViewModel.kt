@@ -37,15 +37,17 @@ class ProductsSearchViewModel @Inject constructor(
     val productDetailNavigation: LiveData<UiProduct> = _productDetailNavigation
     val error: LiveData<String> = _error
 
-    private val parentJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + parentJob)
+    private var job: Job? = null
 
     fun navigateToProductDetail(uiProduct: UiProduct) {
         _productDetailNavigation.value = uiProduct
     }
 
     fun searchProducts(query: String) {
-        coroutineScope.launch(Dispatchers.Main) {
+        cancelOngoingJob()
+
+        job = Job()
+        CoroutineScope(Dispatchers.Main + job!!).launch(Dispatchers.Main) {
             val result: Response<List<Product>> = fetchProductsResult(query)
 
             if (result.successful && result.payload != null) {
@@ -61,6 +63,17 @@ class ProductsSearchViewModel @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        cancelOngoingJob()
+        super.onCleared()
+    }
+
+    private fun cancelOngoingJob() {
+        job?.apply {
+            if (!isCancelled) cancel()
+        }
+    }
+
     private suspend fun fetchProductsResult(query: String) =
         withContext(Dispatchers.IO) {
             productsRepository.searchProducts(query)
@@ -70,9 +83,4 @@ class ProductsSearchViewModel @Inject constructor(
         withContext(Dispatchers.Default) {
             products.map(productsUiManager::buildUiProduct)
         }
-
-    override fun onCleared() {
-        parentJob.cancel()
-        super.onCleared()
-    }
 }
