@@ -21,7 +21,8 @@ class MercadolibreApplication : Application(), HasAndroidInjector {
         super.onCreate()
 
         DaggerApplicationComponent.builder()
-            .bind(this)
+            .bindApplication(this)
+            .bindContext(this)
             .build()
             .inject(this)
 

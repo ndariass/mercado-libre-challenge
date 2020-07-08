@@ -2,7 +2,6 @@ package com.example.mercadolibre_ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_products_search.view.products_sea
 import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_recycler_view
 import javax.inject.Inject
 
+const val PRODUCTS_SEARCH_FRAGMENT_TAG = "ProductsSearchFragmentTag"
+
 /**
  * [Fragment] implementation for the products search screen
  *
@@ -37,6 +38,11 @@ class ProductsSearchFragment : Fragment() {
     private lateinit var viewModel: ProductsSearchViewModel
 
     companion object {
+        /**
+         * Factory method to create a new instance of this fragment
+         *
+         * @return a new instance of this fragment
+         */
         @JvmStatic
         fun newInstance() = ProductsSearchFragment()
     }
@@ -49,16 +55,11 @@ class ProductsSearchFragment : Fragment() {
             .get(ProductsSearchViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_products_search, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_products_search, container, false)
 
     private lateinit var productsAdapter: ProductsAdapter
 
@@ -66,11 +67,13 @@ class ProductsSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.products_search_recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@ProductsSearchFragment.context)
-            productsAdapter = ProductsAdapter(productsManager)
+            layoutManager = LinearLayoutManager(context)
+            productsAdapter = ProductsAdapter()
             adapter = productsAdapter
         }
 
+        //TODO: handle input focus
+        //TODO: avoid reloading on rotate. Why is this happening
         view.products_search_input_text.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.searchProducts(textView.text.toString())
@@ -80,8 +83,12 @@ class ProductsSearchFragment : Fragment() {
             }
         }
 
+        productsAdapter.itemClickListener = {
+            viewModel.navigateToProductDetail(it)
+        }
+
         viewModel.products.observe(viewLifecycleOwner, Observer {
-            Log.d(ProductsSearchViewModel::class.java.name, "+++++ $it")
+            view.products_search_recycler_view.layoutManager?.scrollToPosition(0)
             productsAdapter.data = it
         })
     }

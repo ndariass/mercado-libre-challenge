@@ -1,12 +1,12 @@
 package com.example.mercadolibre_data.dto
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 
 /**
  * Data transfer object for the products API response
+ *
+ * @author Nicolás Arias
  */
 data class ProductResponseDto constructor(val results: List<ProductDto?>?) : Serializable {
     companion object {
@@ -19,7 +19,7 @@ data class ProductResponseDto constructor(val results: List<ProductDto?>?) : Ser
  *
  * @author Nicolás Arias
  */
-data class ProductDto constructor(
+data class ProductDto(
     val id: String?,
     val title: String?,
     val price: Float?,
@@ -41,7 +41,7 @@ data class ProductDto constructor(
         private val serialVersionUID: Long = 1326841318L
     }
 
-    data class Installments constructor(
+    data class Installments(
         val quantity: Int?,
         val amount: Float?,
         @JsonProperty("currency_id")
@@ -52,7 +52,7 @@ data class ProductDto constructor(
         }
     }
 
-    data class Address constructor(
+    data class Address(
         @JsonProperty("state_name")
         val stateName: String?,
         @JsonProperty("city_name")
@@ -63,7 +63,7 @@ data class ProductDto constructor(
         }
     }
 
-    data class Shipping constructor(
+    data class Shipping(
         @JsonProperty("free_shipping")
         val freeShipping: Boolean?,
         @JsonProperty("store_pick_up")
@@ -74,7 +74,7 @@ data class ProductDto constructor(
         }
     }
 
-    data class Attribute constructor(
+    data class Attribute(
         val name: String?,
         @JsonProperty("value_name")
         val valueName: String?

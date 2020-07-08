@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mercadolibre_domain.model.Product
+import com.example.mercadolibre_domain.model.Response
 import com.example.mercadolibre_domain.repository.ProductsRepository
+import com.example.mercadolibre_ui.manager.ProductsManager
+import com.example.mercadolibre_ui.model.UiProduct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,29 +22,34 @@ import javax.inject.Singleton
  * @author Nicolás Arias
  */
 @Singleton
-class ProductsSearchViewModel @Inject constructor(private val productsRepository: ProductsRepository) :
+class ProductsSearchViewModel @Inject constructor(
+    private val productsRepository: ProductsRepository,
+    private val productsManager: ProductsManager
+) :
     ViewModel() {
 
-    private val _products = MutableLiveData<List<Product>>()
+    private val _products = MutableLiveData<List<UiProduct>>()
+    private val _productDetailNavigation = MutableLiveData<UiProduct>()
 
-    val products: LiveData<List<Product>> = _products
+    val products: LiveData<List<UiProduct>> = _products
+    val productDetailNavigation = _productDetailNavigation
 
     private val parentJob = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + parentJob)
 
+    fun navigateToProductDetail(uiProduct: UiProduct) {
+        _productDetailNavigation.value = uiProduct
+    }
+
     fun searchProducts(query: String) {
         coroutineScope.launch(Dispatchers.Main) {
-            val result = fetchProductsResult(query)
-
+            val result: Response<List<Product>> = fetchProductsResult(query)
 
             if (result.successful && result.payload != null) {
-                if (result.payload.isNullOrEmpty()) {
-
-                } else {
-                    _products.value = result.payload
-                }
+                _products.value = buildUiProducts(result.payload!!)
             } else {
                 //Handle error
+                //Handle empty error
             }
         }
     }
@@ -49,6 +57,11 @@ class ProductsSearchViewModel @Inject constructor(private val productsRepository
     private suspend fun fetchProductsResult(query: String) =
         withContext(Dispatchers.IO) {
             productsRepository.searchProducts(query)
+        }
+
+    private suspend fun buildUiProducts(products: List<Product>) =
+        withContext(Dispatchers.Default) {
+            products.map(productsManager::buildUiProduct)
         }
 
     override fun onCleared() {

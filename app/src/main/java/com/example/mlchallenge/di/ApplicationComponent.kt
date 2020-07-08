@@ -1,7 +1,7 @@
 package com.example.mlchallenge.di
 
+import android.content.Context
 import com.example.mercadolibre_data.di.DataModule
-import com.example.mercadolibre_ui.di.AndroidViewsModule
 import com.example.mercadolibre_ui.di.UiModule
 import com.example.mlchallenge.MercadolibreApplication
 import dagger.BindsInstance
@@ -31,7 +31,9 @@ interface ApplicationComponent {
         fun build(): ApplicationComponent
 
         @BindsInstance
-        fun bind(application: MercadolibreApplication): Builder
+        fun bindApplication(application: MercadolibreApplication): Builder
 
+        @BindsInstance
+        fun bindContext(context: Context): Builder
     }
 }

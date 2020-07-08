@@ -1,5 +1,7 @@
 package com.example.mercadolibre_ui.di
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mercadolibre_ui.activity.ProductsSearchActivity
@@ -18,10 +20,10 @@ import dagger.multibindings.IntoMap
  * @author Nicolás Arias
  */
 @Module
-abstract class UiModule {
+abstract class UiModule() {
 
     @Binds
-    abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+    abstract fun provideViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap

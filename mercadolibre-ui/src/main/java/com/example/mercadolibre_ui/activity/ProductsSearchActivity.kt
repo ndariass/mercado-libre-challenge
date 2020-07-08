@@ -1,11 +1,10 @@
 package com.example.mercadolibre_ui.activity
 
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mercadolibre_domain.repository.ProductsRepository
+import androidx.lifecycle.Observer
 import com.example.mercadolibre_ui.R
+import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -17,31 +16,18 @@ import javax.inject.Inject
 class ProductsSearchActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var productsRepository: ProductsRepository
+    lateinit var productsSearchViewModel: ProductsSearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_search)
 
-        runTask()
-    }
+        //TODO: navigate to fragment
 
-    private fun runTask() {
-        object : AsyncTask<Unit, Unit, Unit>() {
-            override fun onProgressUpdate(vararg values: Unit?) {
-
-            }
-
-            override fun doInBackground(vararg p0: Unit?) {
-                val result = productsRepository.searchProducts("Huawei PSmart")
-                Log.d(javaClass.name, "++++++")
-                Log.d(javaClass.name, "++++++$result")
-            }
-
-            override fun onPostExecute(result: Unit?) {
-                super.onPostExecute(result)
-            }
-        }.execute()
+        productsSearchViewModel.productDetailNavigation.observe(this, Observer {
+            supportFragmentManager.beginTransaction()
+                .replace()
+        })
     }
 }
