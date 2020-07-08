@@ -30,6 +30,7 @@ class ProductMapper @Inject constructor() {
                     price = price!!,
                     currencyId = currencyId!!,
                     availableQuantity = availableQuantity,
+                    soldQuantity = soldQuantity,
                     condition = mapCondition(condition),
                     thumbnail = thumbnail,
                     installments = mapInstallments(installments),

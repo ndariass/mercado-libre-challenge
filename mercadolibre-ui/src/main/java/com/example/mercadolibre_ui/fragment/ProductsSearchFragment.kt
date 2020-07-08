@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
@@ -12,10 +14,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.adapter.ProductsAdapter
-import com.example.mercadolibre_ui.manager.ProductsManager
+import com.example.mercadolibre_ui.manager.ProductsUiManager
 import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
 import com.example.mercadolibre_ui.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_products_search.products_search_error
+import kotlinx.android.synthetic.main.fragment_products_search.products_search_input_text
+import kotlinx.android.synthetic.main.fragment_products_search.products_search_recycler_view
 import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_input_text
 import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_recycler_view
 import javax.inject.Inject
@@ -33,7 +38,7 @@ class ProductsSearchFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var productsManager: ProductsManager
+    lateinit var productsUiManager: ProductsUiManager
 
     private lateinit var viewModel: ProductsSearchViewModel
 
@@ -66,7 +71,7 @@ class ProductsSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.products_search_recycler_view.apply {
+        products_search_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
             productsAdapter = ProductsAdapter()
             adapter = productsAdapter
@@ -74,7 +79,7 @@ class ProductsSearchFragment : Fragment() {
 
         //TODO: handle input focus
         //TODO: avoid reloading on rotate. Why is this happening
-        view.products_search_input_text.setOnEditorActionListener { textView, actionId, keyEvent ->
+        products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.searchProducts(textView.text.toString())
                 true
@@ -88,8 +93,16 @@ class ProductsSearchFragment : Fragment() {
         }
 
         viewModel.products.observe(viewLifecycleOwner, Observer {
-            view.products_search_recycler_view.layoutManager?.scrollToPosition(0)
+            products_search_recycler_view.layoutManager?.scrollToPosition(0)
             productsAdapter.data = it
+            products_search_error.visibility = GONE
+            products_search_recycler_view.visibility = VISIBLE
+        })
+
+        viewModel.error.observe(viewLifecycleOwner, Observer {
+            products_search_error.text = it
+            products_search_error.visibility = VISIBLE
+            products_search_recycler_view.visibility = GONE
         })
     }
 }

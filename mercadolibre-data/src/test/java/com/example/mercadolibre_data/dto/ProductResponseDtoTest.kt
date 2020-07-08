@@ -30,6 +30,7 @@ class ProductResponseDtoTest {
             assertEquals(599900f, price)
             assertEquals("COP", currencyId)
             assertEquals(1, availableQuantity)
+            assertEquals(0, soldQuantity)
             assertEquals("used", condition)
             assertEquals(
                 "http://mco-s2-p.mlstatic.com/736765-MCO31544518191_072019-I.jpg",
@@ -75,6 +76,7 @@ class ProductResponseDtoTest {
             assertNull(price)
             assertNull(currencyId)
             assertNull(availableQuantity)
+            assertNull(soldQuantity)
             assertNull(condition)
             assertNull(thumbnail)
             assertNull(installments)

@@ -12,6 +12,7 @@ data class Product(
     val price: Float,
     val currencyId: String,
     val availableQuantity: Int?,
+    val soldQuantity: Int?,
     val condition: Condition?,
     val thumbnail: String?,
     val installments: Installments?,

@@ -27,6 +27,8 @@ data class ProductDto(
     val currencyId: String?,
     @JsonProperty("available_quantity")
     val availableQuantity: Int?,
+    @JsonProperty("sold_quantity")
+    val soldQuantity: Int?,
     val condition: String?,
     val thumbnail: String?,
     val installments: Installments?,

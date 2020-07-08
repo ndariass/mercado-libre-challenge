@@ -1,12 +1,13 @@
 package com.example.mercadolibre_ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mercadolibre_domain.model.Product
 import com.example.mercadolibre_domain.model.Response
 import com.example.mercadolibre_domain.repository.ProductsRepository
-import com.example.mercadolibre_ui.manager.ProductsManager
+import com.example.mercadolibre_ui.manager.ProductsUiManager
 import com.example.mercadolibre_ui.model.UiProduct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,15 +25,17 @@ import javax.inject.Singleton
 @Singleton
 class ProductsSearchViewModel @Inject constructor(
     private val productsRepository: ProductsRepository,
-    private val productsManager: ProductsManager
+    private val productsUiManager: ProductsUiManager
 ) :
     ViewModel() {
 
     private val _products = MutableLiveData<List<UiProduct>>()
     private val _productDetailNavigation = MutableLiveData<UiProduct>()
+    private val _error = MutableLiveData<String>()
 
     val products: LiveData<List<UiProduct>> = _products
-    val productDetailNavigation = _productDetailNavigation
+    val productDetailNavigation: LiveData<UiProduct> = _productDetailNavigation
+    val error: LiveData<String> = _error
 
     private val parentJob = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + parentJob)
@@ -48,8 +51,12 @@ class ProductsSearchViewModel @Inject constructor(
             if (result.successful && result.payload != null) {
                 _products.value = buildUiProducts(result.payload!!)
             } else {
-                //Handle error
-                //Handle empty error
+                _error.value = productsUiManager.getDisplayErrorMessage(result.error)
+
+                Log.d(
+                    ProductsSearchViewModel::class.java.name,
+                    result.errorMessage ?: "Unknown error when searching products"
+                )
             }
         }
     }
@@ -61,7 +68,7 @@ class ProductsSearchViewModel @Inject constructor(
 
     private suspend fun buildUiProducts(products: List<Product>) =
         withContext(Dispatchers.Default) {
-            products.map(productsManager::buildUiProduct)
+            products.map(productsUiManager::buildUiProduct)
         }
 
     override fun onCleared() {

@@ -13,9 +13,22 @@ data class UiProduct(
     val condition: String?,
     val thumbnail: String?,
     val installments: String?,
-    val freeShipping: String?
+    val freeShipping: String?,
+    val detailOverview: String?,
+    val availabilityLabel: String?,
+    val address: String?,
+    val attributes: List<Attribute>
 ) : Serializable {
     companion object {
         private val serialVersionUID: Long = 654484948L
+    }
+
+    data class Attribute(
+        val name: String,
+        val valueName: String
+    ) : Serializable {
+        companion object {
+            private val serialVersionUID: Long = 4875131651L
+        }
     }
 }

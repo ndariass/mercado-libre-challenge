@@ -5,8 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mercadolibre_ui.R
+import com.example.mercadolibre_ui.adapter.ProductAttributesAdapter
+import com.example.mercadolibre_ui.extension.setTextOrHide
 import com.example.mercadolibre_ui.model.UiProduct
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_address
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_attributes
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_availability_installments
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_availability_label
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_availability_shipping
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_image
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_overview
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_price
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_title
 
 const val PRODUCT_DETAIL_FRAGMENT_TAG = "ProductDetailFragmentTag"
 private const val PRODUCT_KEY = "PRODUCT_KEY"
@@ -14,6 +27,9 @@ private const val PRODUCT_KEY = "PRODUCT_KEY"
 class ProductDetailFragment : Fragment() {
 
     companion object {
+
+        const val ATTRIBUTES_COLUMNS_COUNT = 2
+
         /**
          * Factory method to create an instance of this fragment with the given [UiProduct] as argument
          *
@@ -43,5 +59,29 @@ class ProductDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_product_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        uiProduct?.run {
+            product_detail_overview.setTextOrHide(detailOverview)
+            product_detail_title.text = title
+            product_detail_price.text = price
+            product_detail_availability_label.setTextOrHide(availabilityLabel)
+            product_detail_availability_installments.setTextOrHide(installments)
+            product_detail_availability_shipping.setTextOrHide(freeShipping)
+            product_detail_address.setTextOrHide(address)
+
+            Picasso.get()
+                .load(thumbnail)
+                .placeholder(R.drawable.placeholder)
+                .into(product_detail_image)
+
+            product_detail_attributes.apply {
+                layoutManager = GridLayoutManager(context, ATTRIBUTES_COLUMNS_COUNT)
+                adapter = ProductAttributesAdapter().apply { data = attributes }
+            }
+        }
     }
 }

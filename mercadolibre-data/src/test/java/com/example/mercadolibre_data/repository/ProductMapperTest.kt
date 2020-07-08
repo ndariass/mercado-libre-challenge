@@ -36,6 +36,7 @@ class ProductMapperTest {
             assertEquals(productDto.price, price)
             assertEquals(productDto.currencyId, currencyId)
             assertEquals(productDto.availableQuantity, availableQuantity)
+            assertEquals(productDto.soldQuantity, soldQuantity)
             assertEquals(productDto.condition, condition!!.value)
             assertEquals(productDto.thumbnail, thumbnail)
 
@@ -78,6 +79,7 @@ class ProductMapperTest {
             assertEquals(productDto.price, price)
             assertEquals(productDto.currencyId, currencyId)
             assertNull(availableQuantity)
+            assertNull(soldQuantity)
             assertNull(condition)
             assertNull(thumbnail)
             assertNull(installments)

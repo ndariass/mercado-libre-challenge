@@ -1,6 +1,8 @@
 package com.example.mercadolibre_data.repository
 
+import com.example.mercadolibre_data.dto.ProductResponseDto
 import com.example.mercadolibre_data.network.ProductsRestApi
+import com.example.mercadolibre_domain.model.Error
 import com.example.mercadolibre_domain.model.Product
 import com.example.mercadolibre_domain.model.Response
 import com.example.mercadolibre_domain.repository.ProductsRepository
@@ -32,24 +34,54 @@ class RestApiProductsRepository @Inject constructor(
             val apiResponse = restApi.searchProducts(query = query)?.execute()
 
             return if (apiResponse?.isSuccessful == true) {
-                apiResponse
-                    .body()
-                    ?.run { results?.mapNotNull(mapper::map) }
-                    ?.let { Response(payload = it, successful = true, errorMessage = null) }
-                    ?: Response<List<Product>>(
-                        payload = null,
-                        successful = false,
-                        errorMessage = UNKNOWN_CAUSE
-                    )
+                buildSuccessfulResponse(apiResponse)
             } else {
                 Response(
                     payload = null,
+                    error = Error.GENERAL_ERROR,
                     successful = false,
-                    errorMessage = apiResponse?.message() ?: UNKNOWN_CAUSE
+                    errorMessage = apiResponse?.errorBody()?.string() ?: UNKNOWN_CAUSE
                 )
             }
         } catch (e: IOException) {
-            Response(payload = null, successful = false, errorMessage = e.message)
+            Response(
+                payload = null,
+                successful = false,
+                error = Error.NETWORK_ERROR,
+                errorMessage = e.message
+            )
+        }
+    }
+
+    private fun buildSuccessfulResponse(apiResponse: retrofit2.Response<ProductResponseDto?>)
+            : Response<List<Product>> {
+        return (apiResponse
+            .body()
+            ?.run { results?.mapNotNull(mapper::map) }
+            ?.let(this::buildNonNullSuccessfulResponse)
+            ?: Response<List<Product>>(
+                payload = null,
+                error = Error.GENERAL_ERROR,
+                successful = false,
+                errorMessage = UNKNOWN_CAUSE
+            ))
+    }
+
+    private fun buildNonNullSuccessfulResponse(products: List<Product>): Response<List<Product>> {
+        if (products.isEmpty()) {
+            return Response(
+                payload = null,
+                error = Error.NOT_FOUND,
+                successful = false,
+                errorMessage = "No results found"
+            )
+        } else {
+            return Response(
+                payload = products,
+                error = null,
+                successful = true,
+                errorMessage = null
+            )
         }
     }
 }
