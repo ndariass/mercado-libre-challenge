@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mercadolibre_ui.R
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_ava
 import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_image
 import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_overview
 import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_price
+import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_scroll_view
 import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_title
 
 const val PRODUCT_DETAIL_FRAGMENT_TAG = "ProductDetailFragmentTag"
@@ -64,6 +66,13 @@ class ProductDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (savedInstanceState == null) {
+            setViews()
+            product_detail_scroll_view.fullScroll(ScrollView.FOCUS_UP)
+        }
+    }
+
+    private fun setViews() {
         uiProduct?.run {
             product_detail_overview.setTextOrHide(detailOverview)
             product_detail_title.text = title

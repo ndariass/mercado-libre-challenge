@@ -10,9 +10,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/product_detail_layout"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="@dimen/margin_normal"
         android:paddingEnd="@dimen/margin_normal"
-        android:layout_height="wrap_content">
+        android:focusableInTouchMode="true">
 
         <ImageView
             android:id="@+id/product_detail_image"
@@ -82,11 +83,11 @@
             android:id="@+id/product_detail_button_buy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/product_detail_purchase"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_availability_shipping"
-            android:text="@string/product_detail_purchase" />
+            app:layout_constraintTop_toBottomOf="@+id/product_detail_availability_shipping" />
 
         <TextView
             android:id="@+id/product_detail_address"
