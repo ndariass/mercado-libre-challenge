@@ -27,9 +27,9 @@ class ProductsSearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products_search)
 
+        productsSearchViewModel.init()
+
         addFirstFragment(savedInstanceState)
-        addFirstFragmentV2(savedInstanceState)
-        //TODO: need to handle else?
 
         productsSearchViewModel.productDetailNavigation.observe(this, Observer {
             supportFragmentManager.beginTransaction()
@@ -38,14 +38,13 @@ class ProductsSearchActivity : AppCompatActivity() {
                     ProductDetailFragment.newInstance(it),
                     PRODUCT_DETAIL_FRAGMENT_TAG
                 )
-                .addToBackStack("aab")
+                .addToBackStack(null)
                 .setCustomAnimations(
                     R.anim.fragment_open_enter,
                     R.anim.fragment_close_exit,
                     R.anim.fragment_fade_enter,
                     R.anim.fragment_fade_exit
                 )
-                //TODO allowing state loss?
                 .commit()
         })
     }
@@ -65,7 +64,6 @@ class ProductsSearchActivity : AppCompatActivity() {
                     R.anim.fragment_fade_exit
                 )
                 .commit()
-            //TODO allow state loss?
         }
     }
 

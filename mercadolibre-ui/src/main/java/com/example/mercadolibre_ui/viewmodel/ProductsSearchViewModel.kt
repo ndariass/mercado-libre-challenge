@@ -29,15 +29,25 @@ class ProductsSearchViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _products = MutableLiveData<List<UiProduct>>()
-    private val _productDetailNavigation = MutableLiveData<UiProduct>()
-    private val _error = MutableLiveData<String>()
+    private lateinit var _products: MutableLiveData<List<UiProduct>>
+    private lateinit var _productDetailNavigation: MutableLiveData<UiProduct>
+    private lateinit var _error: MutableLiveData<String>
 
-    val products: LiveData<List<UiProduct>> = _products
-    val productDetailNavigation: LiveData<UiProduct> = _productDetailNavigation
-    val error: LiveData<String> = _error
+    lateinit var products: LiveData<List<UiProduct>>
+    lateinit var productDetailNavigation: LiveData<UiProduct>
+    lateinit var error: LiveData<String>
 
     private var job: Job? = null
+
+    fun init() {
+        _products = MutableLiveData()
+        _productDetailNavigation = MutableLiveData()
+        _error = MutableLiveData()
+
+        products = _products
+        productDetailNavigation = _productDetailNavigation
+        error = _error
+    }
 
     fun navigateToProductDetail(uiProduct: UiProduct) {
         _productDetailNavigation.value = uiProduct

@@ -2,6 +2,7 @@ package com.example.mercadolibre_ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -23,11 +24,10 @@ import kotlinx.android.synthetic.main.fragment_products_search.products_search_e
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_input_text
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_loader
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_recycler_view
-import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_error
-import kotlinx.android.synthetic.main.fragment_products_search.view.products_search_recycler_view
 import javax.inject.Inject
 
 const val PRODUCTS_SEARCH_FRAGMENT_TAG = "ProductsSearchFragmentTag"
+const val RECYCLER_VIEW_STATE_KEY = "RECYCLER_VIEW_STATE_KEY"
 
 /**
  * [Fragment] implementation for the products search screen
@@ -43,6 +43,8 @@ class ProductsSearchFragment : Fragment() {
     lateinit var productsUiManager: ProductsUiManager
 
     private lateinit var viewModel: ProductsSearchViewModel
+
+    private var recyclerViewState: Parcelable? = null
 
     companion object {
         /**
@@ -74,7 +76,11 @@ class ProductsSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         products_search_recycler_view.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context).apply {
+                savedInstanceState?.getParcelable<Parcelable>(RECYCLER_VIEW_STATE_KEY)
+                    ?.let(this::onRestoreInstanceState)
+            }
+
             productsAdapter = ProductsAdapter()
             adapter = productsAdapter
         }
@@ -119,5 +125,27 @@ class ProductsSearchFragment : Fragment() {
             products_search_loader.visibility = GONE
             products_search_recycler_view.visibility = GONE
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        recyclerViewState?.let {
+            products_search_recycler_view.layoutManager?.onRestoreInstanceState(it)
+        }
+    }
+
+    override fun onStop() {
+        recyclerViewState = products_search_recycler_view.layoutManager?.onSaveInstanceState()
+
+        super.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        products_search_recycler_view.layoutManager?.onSaveInstanceState()?.let {
+            outState.putParcelable(RECYCLER_VIEW_STATE_KEY, it)
+        }
+
+        super.onSaveInstanceState(outState)
     }
 }
