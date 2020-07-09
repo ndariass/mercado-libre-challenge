@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_pri
 import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_title
 
 const val PRODUCT_DETAIL_FRAGMENT_TAG = "ProductDetailFragmentTag"
-private const val PRODUCT_KEY = "PRODUCT_KEY"
+const val PRODUCT_KEY = "PRODUCT_KEY"
 
 class ProductDetailFragment : Fragment() {
 

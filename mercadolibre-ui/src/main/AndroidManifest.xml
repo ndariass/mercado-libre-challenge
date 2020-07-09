@@ -4,6 +4,8 @@
 
     <application>
         <activity
+            android:name=".activity.ProductDetailActivity" />
+        <activity
             android:name=".activity.ProductsSearchActivity"
             android:configChanges="orientation|screenSize" />
     </application>
