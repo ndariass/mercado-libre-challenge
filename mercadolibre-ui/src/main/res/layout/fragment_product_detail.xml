@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/product_detail_scroll_view"
@@ -11,9 +11,9 @@
         android:id="@+id/product_detail_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:paddingStart="@dimen/margin_normal"
-        android:paddingEnd="@dimen/margin_normal"
-        android:focusableInTouchMode="true">
+        android:paddingEnd="@dimen/margin_normal">
 
         <ImageView
             android:id="@+id/product_detail_image"
@@ -26,8 +26,10 @@
 
         <TextView
             android:id="@+id/product_detail_overview"
+            style="@style/Label.Detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_detail_image"
@@ -35,8 +37,10 @@
 
         <TextView
             android:id="@+id/product_detail_title"
+            style="@style/Title.Detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_detail_overview"
@@ -44,8 +48,10 @@
 
         <TextView
             android:id="@+id/product_detail_price"
+            style="@style/Price.Detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_detail_title"
@@ -53,8 +59,10 @@
 
         <TextView
             android:id="@+id/product_detail_availability_label"
+            style="@style/Attribute.Detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_detail_price"
@@ -62,8 +70,10 @@
 
         <TextView
             android:id="@+id/product_detail_availability_installments"
+            style="@style/Attribute.Detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_detail_availability_label"
@@ -71,41 +81,38 @@
 
         <TextView
             android:id="@+id/product_detail_availability_shipping"
+            style="@style/Attribute.Detail.Featured"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_detail_availability_installments"
             tools:text="Envío gratis" />
 
-        <!-- TODO: set material theme Theme.MaterialComponents -->
-        <Button
-            android:id="@+id/product_detail_button_buy"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/product_detail_purchase"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_availability_shipping" />
-
         <TextView
             android:id="@+id/product_detail_address"
+            style="@style/Attribute.Detail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/product_detail_button_buy"
+            app:layout_constraintTop_toBottomOf="@id/product_detail_availability_shipping"
             tools:text="Bogotá D.C., Usaquén" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/product_detail_attributes"
             android:layout_width="0dp"
+            android:layout_marginTop="@dimen/margin_large"
             android:layout_height="wrap_content"
+            tools:listitem="@layout/item_product_attribute"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_detail_address" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

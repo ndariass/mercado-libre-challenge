@@ -1,0 +1,66 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="Title">
+        <item name="android:textColor">@color/headerText</item>
+    </style>
+
+    <style name="Title.List">
+        <item name="android:textSize">@dimen/list_header_text</item>
+    </style>
+
+    <style name="Title.Detail">
+        <item name="android:textSize">@dimen/detail_header_text</item>
+    </style>
+
+    <style name="Price">
+        <item name="android:textColor">@color/headerText</item>
+    </style>
+
+    <style name="Price.List">
+        <item name="android:textSize">@dimen/list_price_text</item>
+    </style>
+
+    <style name="Price.Detail">
+        <item name="android:textSize">@dimen/detail_price_text</item>
+    </style>
+
+    <style name="Attribute">
+        <item name="android:textColor">@color/contentText</item>
+    </style>
+
+    <style name="Attribute.List">
+        <item name="android:textSize">@dimen/list_content_text</item>
+    </style>
+
+    <style name="Attribute.List.Featured">
+        <item name="android:textColor">@color/featuredContentText</item>
+    </style>
+
+    <style name="Attribute.Detail">
+        <item name="android:textSize">@dimen/detail_content_text</item>
+    </style>
+
+    <style name="Attribute.Detail.Featured">
+        <item name="android:textColor">@color/featuredContentText</item>
+    </style>
+
+    <style name="Label">
+        <item name="android:textColor">@color/labelText</item>
+    </style>
+
+    <style name="Label.Detail">
+        <item name="android:textSize">@dimen/detail_label_text</item>
+    </style>
+
+    <style name="Error">
+        <item name="android:textSize">@dimen/error_text</item>
+        <item name="android:color">@color/labelText</item>
+    </style>
+</resources>

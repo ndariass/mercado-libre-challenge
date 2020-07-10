@@ -1,6 +1,6 @@
 <resources>
     <!-- Products search screen -->
-    <string name="products_search_error_not_found">Tu búsuqeda no arrojó resultados</string>
+    <string name="products_search_error_not_found">Tu búsqeda no arrojó resultados</string>
     <string name="products_search_error_network">Revisa tu conexión a internet y vuelve a intentarlo</string>
     <string name="products_search_error_general">Hubo un error al realizar la búsqueda. Inténtalo de nuevo</string>
     <string name="products_search_price">"$ %s"</string>
@@ -10,6 +10,7 @@
     <string name="products_search_free_shipping">Envío gratis</string>
     <string name="products_search_stock_available">Stock disponible</string>
     <string name="products_search_stock_not_available">Agotado</string>
+    <string name="products_search_hint">Buscar en Mercado Libre</string>
     <plurals name="products_search_sold_items">
         <item quantity="one">%d vendido</item>
         <item quantity="other">%d vendidos</item>
@@ -17,4 +18,5 @@
 
     <!-- Product detail screen -->
     <string name="product_detail_purchase">Comprar</string>
+    <string name="product_detail_label">Producto</string>
 </resources>

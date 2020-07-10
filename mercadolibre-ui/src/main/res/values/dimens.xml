@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+
+    <dimen name="list_header_text">16sp</dimen>
+    <dimen name="list_price_text">22sp</dimen>
+    <dimen name="list_content_text">14sp</dimen>
+    <dimen name="detail_header_text">22sp</dimen>
+    <dimen name="detail_price_text">28sp</dimen>
+    <dimen name="detail_content_text">16sp</dimen>
+    <dimen name="detail_label_text">14dp</dimen>
+    <dimen name="error_text">28sp</dimen>
 </resources>

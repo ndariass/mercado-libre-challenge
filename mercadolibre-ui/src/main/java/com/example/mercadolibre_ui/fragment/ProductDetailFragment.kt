@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.adapter.ProductAttributesAdapter
 import com.example.mercadolibre_ui.extension.setTextOrHide
@@ -29,9 +28,6 @@ const val PRODUCT_KEY = "PRODUCT_KEY"
 class ProductDetailFragment : Fragment() {
 
     companion object {
-
-        const val ATTRIBUTES_COLUMNS_COUNT = 2
-
         /**
          * Factory method to create an instance of this fragment with the given [UiProduct] as argument
          *
@@ -88,8 +84,8 @@ class ProductDetailFragment : Fragment() {
                 .into(product_detail_image)
 
             product_detail_attributes.apply {
-                layoutManager = GridLayoutManager(context, ATTRIBUTES_COLUMNS_COUNT)
                 adapter = ProductAttributesAdapter().apply { data = attributes }
+                isNestedScrollingEnabled = false
             }
         }
     }

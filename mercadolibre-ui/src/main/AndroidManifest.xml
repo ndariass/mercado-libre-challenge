@@ -2,9 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mercadolibre_ui">
 
-    <application>
+    <application
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.ProductDetailActivity" />
+            android:name=".activity.ProductDetailActivity"
+            android:label="@string/product_detail_label" />
         <activity
             android:name=".activity.ProductsSearchActivity"
             android:configChanges="orientation|screenSize" />
