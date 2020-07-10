@@ -5,10 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:paddingStart="@dimen/margin_normal"
-    android:paddingTop="@dimen/margin_small"
-    android:paddingEnd="@dimen/margin_normal"
-    android:paddingBottom="@dimen/margin_small">
+    android:padding="@dimen/margin_normal">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/item_list_product_guideline"

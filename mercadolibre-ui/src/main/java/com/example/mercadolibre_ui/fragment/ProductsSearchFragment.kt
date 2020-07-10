@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.adapter.ProductsAdapter
@@ -75,6 +76,8 @@ class ProductsSearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             productsAdapter = ProductsAdapter()
             adapter = productsAdapter
+            DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+                .apply(this::addItemDecoration)
         }
 
         products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
