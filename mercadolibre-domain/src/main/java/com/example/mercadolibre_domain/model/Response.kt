@@ -7,6 +7,7 @@ package com.example.mercadolibre_domain.model
  */
 data class Response<T>(
     val payload: T?,
+    val totalElements: Int?,
     val successful: Boolean,
     val error: Error?,
     val errorMessage: String?

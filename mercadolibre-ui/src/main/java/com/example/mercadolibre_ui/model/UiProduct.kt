@@ -8,6 +8,7 @@ import java.io.Serializable
  * @author Nicolás Arias
  */
 data class UiProduct(
+    val id: String,
     val title: String,
     val price: String,
     val condition: String?,

@@ -77,6 +77,7 @@ class ProductsUiManagerTest {
         )
 
         subject.buildUiProduct(product).apply {
+            assertEquals(product.id, id)
             assertEquals(product.title, title)
             assertEquals("$ ${product.price.formatNoDecimals()}", price)
             assertEquals("Usado", condition)
@@ -98,6 +99,7 @@ class ProductsUiManagerTest {
         val product = buildTestProduct()
 
         subject.buildUiProduct(product).apply {
+            assertEquals(product.id, id)
             assertEquals(product.title, title)
             assertEquals("$ ${product.price.formatNoDecimals()}", price)
 

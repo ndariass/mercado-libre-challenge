@@ -1,5 +1,6 @@
 package com.example.mercadolibre_data.repository
 
+import com.example.mercadolibre_data.dto.PagingDto
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
 import com.example.mercadolibre_data.network.ProductsRestApi
@@ -20,6 +21,10 @@ import org.mockito.MockitoAnnotations.initMocks
 import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
+
+private const val TOTAL_ELEMENTS = 100
+private const val PAGE_SIZE = 20
+private const val OFFSET = 40
 
 /**
  * Unit tests for [RestApiProductsRepository]
@@ -52,6 +57,14 @@ class RestApiProductsRepositoryTest {
     @Mock
     private lateinit var apiErrorResponseBody: ResponseBody
 
+    private val pagingDto = PagingDto(
+        total = TOTAL_ELEMENTS,
+        limit = PAGE_SIZE,
+        offset = OFFSET
+    )
+
+    private val pagingDtoWithoutTotal = PagingDto(null, null, null)
+
     @Before
     @Throws(Exception::class)
     fun setUp() {
@@ -59,16 +72,18 @@ class RestApiProductsRepositoryTest {
     }
 
     @Test
-    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_Then_ReturnResultWithPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(call as Call<ProductResponseDto?>?)
+    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_AndPagingInfoIsPresent_Then_ReturnResultWithPayload() {
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
+            .thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
         `when`(apiResponse.isSuccessful).thenReturn(true)
-        `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto)))
+        `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto), pagingDto))
         `when`(mapper.map(productDto)).thenReturn(product)
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertEquals(1, payload!!.size)
             assertEquals(product, payload!![0])
+            assertEquals(TOTAL_ELEMENTS, totalElements)
             assertTrue(successful)
             assertNull(error)
             assertNull(errorMessage)
@@ -76,15 +91,34 @@ class RestApiProductsRepositoryTest {
     }
 
     @Test
-    fun test_SearchProducts_Given_CallIsSuccessful_And_NoDtoIsMapped_Then_ReturnResultWithoutPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(call as Call<ProductResponseDto?>?)
+    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_AndPagingInfoIsNotPresent_Then_ReturnResultWithOutPayload() {
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
+            .thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
         `when`(apiResponse.isSuccessful).thenReturn(true)
-        `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto)))
+        `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto), pagingDtoWithoutTotal))
+        `when`(mapper.map(productDto)).thenReturn(product)
+
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
+            assertNull(payload)
+            assertNull(totalElements)
+            assertFalse(successful)
+            assertEquals(Error.GENERAL_ERROR, error)
+        }
+    }
+
+    @Test
+    fun test_SearchProducts_Given_CallIsSuccessful_And_NoDtoIsMapped_Then_ReturnResultWithoutPayload() {
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
+            .thenReturn(call as Call<ProductResponseDto?>?)
+        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+        `when`(apiResponse.isSuccessful).thenReturn(true)
+        `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto), pagingDto))
         `when`(mapper.map(productDto)).thenReturn(null)
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertNull(payload)
+            assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.NOT_FOUND, error)
             assertEquals("No results found", errorMessage)
@@ -93,13 +127,14 @@ class RestApiProductsRepositoryTest {
 
     @Test
     fun test_SearchProducts_Given_CallIsSuccessful_And_ResultFieldInResponseIsNull_Then_ReturnResultWithoutPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(call as Call<ProductResponseDto?>?)
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET)).thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
         `when`(apiResponse.isSuccessful).thenReturn(true)
-        `when`(apiResponse.body()).thenReturn(ProductResponseDto(null))
+        `when`(apiResponse.body()).thenReturn(ProductResponseDto(null, null))
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertNull(payload)
+            assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.GENERAL_ERROR, error)
             assertEquals(UNKNOWN_CAUSE, errorMessage)
@@ -108,13 +143,14 @@ class RestApiProductsRepositoryTest {
 
     @Test
     fun test_SearchProducts_Given_CallIsSuccessful_And_ResultFieldInResponseIsEmpty_Then_ReturnResultWithoutPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(call as Call<ProductResponseDto?>?)
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET)).thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
         `when`(apiResponse.isSuccessful).thenReturn(true)
-        `when`(apiResponse.body()).thenReturn(ProductResponseDto(emptyList()))
+        `when`(apiResponse.body()).thenReturn(ProductResponseDto(emptyList(), pagingDto))
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertNull(payload)
+            assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.NOT_FOUND, error)
             assertEquals("No results found", errorMessage)
@@ -123,10 +159,11 @@ class RestApiProductsRepositoryTest {
 
     @Test
     fun test_SearchProducts_Given_RestApiReturnsNullCall_Then_ReturnResultWithoutPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(null)
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET)).thenReturn(null)
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertNull(payload)
+            assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.GENERAL_ERROR, error)
             assertEquals(UNKNOWN_CAUSE, errorMessage)
@@ -135,14 +172,15 @@ class RestApiProductsRepositoryTest {
 
     @Test
     fun test_SearchProducts_Given_RestApiReturnsNotSuccessfulCall_Then_ReturnResultWithoutPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(call as Call<ProductResponseDto?>?)
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET)).thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse)
         `when`(apiResponse.isSuccessful).thenReturn(false)
         `when`(apiResponse.errorBody()).thenReturn(apiErrorResponseBody)
         `when`(apiErrorResponseBody.string()).thenReturn("{Api Response body}")
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertNull(payload)
+            assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.GENERAL_ERROR, error)
             assertEquals("{Api Response body}", errorMessage)
@@ -151,12 +189,12 @@ class RestApiProductsRepositoryTest {
 
     @Test
     fun test_SearchProducts_Given_RestApiThrowsException_Then_ReturnResultWithoutPayload() {
-        `when`(restApi.searchProducts(query = "query")).thenReturn(call as Call<ProductResponseDto?>?)
-        `when`(restApi.searchProducts(query = "query")!!.execute())
-            .thenThrow(IOException("Exception message"))
+        `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET)).thenReturn(call as Call<ProductResponseDto?>?)
+        `when`(call.execute()).thenThrow(IOException("Exception message"))
 
-        subject.searchProducts("query").apply {
+        subject.searchProducts("query", PAGE_SIZE, OFFSET).apply {
             assertNull(payload)
+            assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.NETWORK_ERROR, error)
             assertEquals("Exception message", errorMessage)

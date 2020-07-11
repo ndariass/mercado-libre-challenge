@@ -11,10 +11,13 @@ import com.example.mercadolibre_domain.model.Response
 interface ProductsRepository {
 
     /**
-     * Search all products matching the given query
+     * Search products matching the given query, limited by the given page size and starting at
+     * the given offset
      *
      * @param query the search query to find matching products
+     * @param pageSize the maximum number of items to retrieve
+     * @param offset the start position to get the items
      * @return a [List] containing the matching products
      */
-    fun searchProducts(query: String): Response<List<Product>>
+    fun searchProducts(query: String, pageSize: Int, offset: Int): Response<List<Product>>
 }

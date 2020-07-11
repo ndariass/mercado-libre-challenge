@@ -46,12 +46,6 @@ class ProductsSearchActivity : AppCompatActivity() {
                 ProductsSearchFragment.newInstance(),
                 PRODUCTS_SEARCH_FRAGMENT_TAG
             )
-            .setCustomAnimations(
-                R.anim.fragment_open_enter,
-                R.anim.fragment_close_exit,
-                R.anim.fragment_fade_enter,
-                R.anim.fragment_fade_exit
-            )
             .commit()
     }
 }

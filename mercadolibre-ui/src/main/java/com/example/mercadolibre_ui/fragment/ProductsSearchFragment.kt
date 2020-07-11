@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.adapter.ProductsAdapter
-import com.example.mercadolibre_ui.manager.ProductsUiManager
 import com.example.mercadolibre_ui.util.hideKeyboard
 import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
 import com.example.mercadolibre_ui.viewmodel.ViewModelFactory
@@ -37,9 +36,6 @@ class ProductsSearchFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
-    @Inject
-    lateinit var productsUiManager: ProductsUiManager
 
     private lateinit var viewModel: ProductsSearchViewModel
 
@@ -72,13 +68,7 @@ class ProductsSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        products_search_recycler_view.apply {
-            layoutManager = LinearLayoutManager(context)
-            productsAdapter = ProductsAdapter()
-            adapter = productsAdapter
-            DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-                .apply(this::addItemDecoration)
-        }
+        setUpRecyclerView()
 
         products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -93,7 +83,16 @@ class ProductsSearchFragment : Fragment() {
                     products_search_loader.visibility = VISIBLE
                     products_search_recycler_view.visibility = GONE
                     products_search_error.visibility = GONE
-                    viewModel.searchProducts(query)
+                    productsAdapter.submitList(null)
+
+                    viewModel.searchProducts(query).observe(viewLifecycleOwner, Observer {
+                        if (!it.isEmpty()) {
+                            products_search_recycler_view.post { productsAdapter.submitList(it) }
+                            products_search_error.visibility = GONE
+                            products_search_loader.visibility = GONE
+                            products_search_recycler_view.visibility = VISIBLE
+                        }
+                    })
                     true
                 }
             } else {
@@ -105,19 +104,22 @@ class ProductsSearchFragment : Fragment() {
             viewModel.navigateToProductDetail(it)
         }
 
-        viewModel.products.observe(viewLifecycleOwner, Observer {
-            products_search_recycler_view.layoutManager?.scrollToPosition(0)
-            productsAdapter.data = it
-            products_search_error.visibility = GONE
-            products_search_loader.visibility = GONE
-            products_search_recycler_view.visibility = VISIBLE
-        })
-
         viewModel.error.observe(viewLifecycleOwner, Observer {
             products_search_error.text = it
             products_search_error.visibility = VISIBLE
             products_search_loader.visibility = GONE
             products_search_recycler_view.visibility = GONE
         })
+    }
+
+    private fun setUpRecyclerView() {
+
+        products_search_recycler_view.apply {
+            layoutManager = LinearLayoutManager(context)
+            productsAdapter = ProductsAdapter()
+            adapter = productsAdapter
+            DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+                .apply(this::addItemDecoration)
+        }
     }
 }

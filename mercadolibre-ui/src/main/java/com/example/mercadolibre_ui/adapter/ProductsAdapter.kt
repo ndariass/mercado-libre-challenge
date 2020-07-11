@@ -3,6 +3,9 @@ package com.example.mercadolibre_ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.extension.setTextOrHide
@@ -16,17 +19,32 @@ import kotlinx.android.synthetic.main.item_list_product.view.item_list_thumbnail
 import kotlinx.android.synthetic.main.item_list_product.view.item_list_title
 
 /**
- * [RecyclerView.Adapter] implementation to display a list of products
+ * [DiffUtil.ItemCallback] implementation for [ProductsAdapter]
+ */
+val DIFF_CALLBACK: DiffUtil.ItemCallback<UiProduct> = object : DiffUtil.ItemCallback<UiProduct>() {
+    override fun areItemsTheSame(oldItem: UiProduct, newItem: UiProduct): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: UiProduct, newItem: UiProduct): Boolean {
+        return oldItem == newItem
+    }
+}
+
+/**
+ * [ListAdapter] implementation to display a list of products
  *
  * @author Nicolás Arias
  */
-class ProductsAdapter : RecyclerView.Adapter<ProductListItemViewHolder>() {
+class ProductsAdapter : PagedListAdapter<UiProduct, ProductListItemViewHolder>(DIFF_CALLBACK) {
 
+    /*
     var data: List<UiProduct> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+     */
 
     var itemClickListener: ((uiProduct: UiProduct) -> Unit)? = null
 
@@ -37,10 +55,8 @@ class ProductsAdapter : RecyclerView.Adapter<ProductListItemViewHolder>() {
         return ProductListItemViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int = data.size
-
     override fun onBindViewHolder(holder: ProductListItemViewHolder, position: Int) {
-        val item = data[holder.adapterPosition]
+        val item = getItem(holder.adapterPosition) ?: return
 
         holder.itemView.apply {
             item_list_title.text = item.title

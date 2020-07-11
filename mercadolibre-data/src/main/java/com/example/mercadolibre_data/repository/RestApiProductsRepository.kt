@@ -29,15 +29,24 @@ class RestApiProductsRepository @Inject constructor(
     /**
      * See documentation in parent class
      */
-    override fun searchProducts(query: String): Response<List<Product>> {
+    override fun searchProducts(
+        query: String,
+        pageSize: Int,
+        offset: Int
+    ): Response<List<Product>> {
         return try {
-            val apiResponse = restApi.searchProducts(query = query)?.execute()
+            val apiResponse = restApi.searchProducts(
+                query = query,
+                pageSize = pageSize,
+                offset = offset
+            )?.execute()
 
             return if (apiResponse?.isSuccessful == true) {
-                buildSuccessfulResponse(apiResponse)
+                buildResultFromSuccessfulApiResponse(apiResponse)
             } else {
                 Response(
                     payload = null,
+                    totalElements = null,
                     error = Error.GENERAL_ERROR,
                     successful = false,
                     errorMessage = apiResponse?.errorBody()?.string() ?: UNKNOWN_CAUSE
@@ -46,6 +55,7 @@ class RestApiProductsRepository @Inject constructor(
         } catch (e: IOException) {
             Response(
                 payload = null,
+                totalElements = null,
                 successful = false,
                 error = Error.NETWORK_ERROR,
                 errorMessage = e.message
@@ -53,24 +63,36 @@ class RestApiProductsRepository @Inject constructor(
         }
     }
 
-    private fun buildSuccessfulResponse(apiResponse: retrofit2.Response<ProductResponseDto?>)
+    private fun buildResultFromSuccessfulApiResponse(apiResponse: retrofit2.Response<ProductResponseDto?>)
             : Response<List<Product>> {
-        return (apiResponse
+
+        val responseBody = apiResponse
             .body()
-            ?.run { results?.mapNotNull(mapper::map) }
-            ?.let(this::buildNonNullSuccessfulResponse)
-            ?: Response<List<Product>>(
+
+        val searchResults = responseBody?.results?.mapNotNull(mapper::map)
+        val pagingTotalElements = responseBody?.paging?.total
+
+        return if (searchResults != null && pagingTotalElements != null) {
+            buildResponseFromNonNullResult(searchResults, pagingTotalElements)
+        } else {
+            Response<List<Product>>(
                 payload = null,
+                totalElements = null,
                 error = Error.GENERAL_ERROR,
                 successful = false,
                 errorMessage = UNKNOWN_CAUSE
-            ))
+            )
+        }
     }
 
-    private fun buildNonNullSuccessfulResponse(products: List<Product>): Response<List<Product>> {
+    private fun buildResponseFromNonNullResult(
+        products: List<Product>,
+        totalElements: Int
+    ): Response<List<Product>> {
         if (products.isEmpty()) {
             return Response(
                 payload = null,
+                totalElements = null,
                 error = Error.NOT_FOUND,
                 successful = false,
                 errorMessage = "No results found"
@@ -78,6 +100,7 @@ class RestApiProductsRepository @Inject constructor(
         } else {
             return Response(
                 payload = products,
+                totalElements = totalElements,
                 error = null,
                 successful = true,
                 errorMessage = null

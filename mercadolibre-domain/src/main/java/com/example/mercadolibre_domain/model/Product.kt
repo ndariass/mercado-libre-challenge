@@ -1,4 +1,3 @@
-/* (c) Disney. All rights reserved. */
 package com.example.mercadolibre_domain.model
 
 /**

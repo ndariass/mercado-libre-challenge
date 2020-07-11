@@ -37,6 +37,7 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
      */
     fun buildUiProduct(product: Product): UiProduct =
         UiProduct(
+            id = product.id,
             title = product.title,
             price = getPrice(product),
             condition = getCondition(product.condition),

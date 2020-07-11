@@ -21,6 +21,8 @@ interface ProductsRestApi {
     @GET("sites/{site}/search")
     fun searchProducts(
         @Path("site") site: String = DEFAULT_SITE,
-        @Query("q") query: String
+        @Query("q") query: String,
+        @Query("limit") pageSize: Int,
+        @Query("offset") offset: Int
     ): Call<ProductResponseDto?>?
 }

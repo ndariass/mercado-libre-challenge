@@ -8,11 +8,17 @@ import java.io.Serializable
  *
  * @author Nicolás Arias
  */
-data class ProductResponseDto constructor(val results: List<ProductDto?>?) : Serializable {
+data class ProductResponseDto(val results: List<ProductDto?>?, val paging: PagingDto?) : Serializable {
     companion object {
         private val serialVersionUID: Long = 98962651L
     }
 }
+
+data class PagingDto(
+    val total: Int?,
+    val offset: Int?,
+    val limit: Int?
+)
 
 /**
  * Data transfer object for a product
