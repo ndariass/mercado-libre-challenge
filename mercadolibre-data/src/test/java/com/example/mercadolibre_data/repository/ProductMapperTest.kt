@@ -2,6 +2,7 @@ package com.example.mercadolibre_data.repository
 
 import com.example.mercadolibre_data.TestUtils.readFromFile
 import com.example.mercadolibre_data.TestUtils.readFromJson
+import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -63,11 +64,9 @@ class ProductMapperTest {
     }
 
     @Test
-    fun test_map_Given_FieldsNotPresent_Then_ReturnNonNullModelWithNullFields() {
-        val resultDto = readFromJson(
-            json = "{\n" +
-                    "\"results\": [{}]\n" +
-                    "}",
+    fun test_map_Given_OnlyMandatoryFieldsPresent_Then_ReturnNonNullModel() {
+        val resultDto = readFromFile(
+            path = "/products-only-mandatory-fields.json",
             clazz = ProductResponseDto::class.java
         )
 
@@ -75,10 +74,10 @@ class ProductMapperTest {
         val productDto = resultDto.results!![0]!!
 
         subject.map(productDto)!!.apply {
-            assertNull(id)
-            assertNull(title)
-            assertNull(price)
-            assertNull(currencyId)
+            assertEquals(productDto.id, id)
+            assertEquals(productDto.title, title)
+            assertEquals(productDto.price, price)
+            assertEquals(productDto.currencyId, currencyId)
             assertNull(availableQuantity)
             assertNull(soldQuantity)
             assertNull(condition)
@@ -91,6 +90,17 @@ class ProductMapperTest {
             assertNull(originalPrice)
         }
     }
+
+    @Test
+    fun test_map_Given_MandatoryFieldsMissing_Then_ReturnNullModel() {
+        val resultDto = readFromJson(
+            json = "{}",
+            clazz = ProductDto::class.java
+        )
+
+        assertNull(subject.map(resultDto))
+    }
+
 
     @Test
     fun test_map_Given_OptionalAttributesAreInvalid_Then_ReturnModelWithNullFields() {

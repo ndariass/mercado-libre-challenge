@@ -20,12 +20,12 @@ class ProductMapper @Inject constructor() {
      * @return the mapped instance or null if the input is null
      */
     fun map(dto: ProductDto?): Product? =
-        dto?.run {
+        dto?.takeIf(this::getMandatoryFieldsFilter)?.run {
             Product(
-                id = id,
-                title = title,
-                price = price,
-                currencyId = currencyId,
+                id = id!!,
+                title = title!!,
+                price = price!!,
+                currencyId = currencyId!!,
                 availableQuantity = availableQuantity,
                 soldQuantity = soldQuantity,
                 condition = mapCondition(condition),
@@ -37,6 +37,11 @@ class ProductMapper @Inject constructor() {
                 originalPrice = originalPrice
             )
         }
+
+    private fun getMandatoryFieldsFilter(dto: ProductDto) =
+        listOf(dto.id, dto.title, dto.currencyId).all { !it.isNullOrBlank() }
+                && dto.price != null
+
 
     private fun mapCondition(condition: String?): Product.Condition? =
         Product.Condition.values().find { it.value == condition }

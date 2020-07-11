@@ -1,0 +1,408 @@
+{
+  "site_id": "MCO",
+  "query": "Motorola G6",
+  "paging": {
+    "total": 190,
+    "offset": 0,
+    "limit": 2,
+    "primary_results": 76
+  },
+  "results": [
+    {
+      "id": "MCO481185321",
+      "title": "Motorola Moto G6 Octacore 32gb 3ram Huella 4g Dualcam 2018",
+      "price": 599900,
+      "currency_id": "COP"
+    }
+  ],
+  "secondary_results": [],
+  "related_results": [],
+  "sort": {
+    "id": "relevance",
+    "name": "Más relevantes"
+  },
+  "available_sorts": [
+    {
+      "id": "price_asc",
+      "name": "Menor precio"
+    },
+    {
+      "id": "price_desc",
+      "name": "Mayor precio"
+    }
+  ],
+  "filters": [
+    {
+      "id": "category",
+      "name": "Categorías",
+      "type": "text",
+      "values": [
+        {
+          "id": "MCO1055",
+          "name": "Celulares y Smartphones",
+          "path_from_root": [
+            {
+              "id": "MCO1051",
+              "name": "Celulares y Teléfonos"
+            },
+            {
+              "id": "MCO1055",
+              "name": "Celulares y Smartphones"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BRAND",
+      "name": "Marca",
+      "type": "STRING",
+      "values": [
+        {
+          "id": "2503",
+          "name": "Motorola"
+        }
+      ]
+    }
+  ],
+  "available_filters": [
+    {
+      "id": "discount",
+      "name": "Descuentos",
+      "type": "range",
+      "values": [
+        {
+          "id": "30-100",
+          "name": "Desde 30% off",
+          "results": 1
+        }
+      ]
+    },
+    {
+      "id": "state",
+      "name": "Ubicación",
+      "type": "text",
+      "values": [
+        {
+          "id": "CO-DC",
+          "name": "Bogotá D.C.",
+          "results": 104
+        },
+        {
+          "id": "CO-ANT",
+          "name": "Antioquia",
+          "results": 21
+        },
+        {
+          "id": "CO-CUN",
+          "name": "Cundinamarca",
+          "results": 10
+        },
+        {
+          "id": "CO-VAC",
+          "name": "Valle Del Cauca",
+          "results": 9
+        },
+        {
+          "id": "CO-ATL",
+          "name": "Atlantico",
+          "results": 6
+        },
+        {
+          "id": "CO-SAN",
+          "name": "Santander",
+          "results": 6
+        },
+        {
+          "id": "CO-CES",
+          "name": "Cesar",
+          "results": 5
+        },
+        {
+          "id": "CO-BOL",
+          "name": "Bolivar",
+          "results": 3
+        },
+        {
+          "id": "CO-CAL",
+          "name": "Caldas",
+          "results": 3
+        },
+        {
+          "id": "CO-MAG",
+          "name": "Magdalena",
+          "results": 3
+        },
+        {
+          "id": "CO-RIS",
+          "name": "Risaralda",
+          "results": 3
+        },
+        {
+          "id": "CO-BOY",
+          "name": "Boyaca",
+          "results": 2
+        },
+        {
+          "id": "CO-CHO",
+          "name": "Choco",
+          "results": 2
+        },
+        {
+          "id": "CO-CAU",
+          "name": "Cauca",
+          "results": 1
+        },
+        {
+          "id": "CO-COR",
+          "name": "Córdoba",
+          "results": 1
+        },
+        {
+          "id": "CO-NAR",
+          "name": "Nariño",
+          "results": 1
+        },
+        {
+          "id": "CO-NSA",
+          "name": "Norte De Santander",
+          "results": 1
+        },
+        {
+          "id": "CO-SUC",
+          "name": "Sucre",
+          "results": 1
+        },
+        {
+          "id": "CO-TOL",
+          "name": "Tolima",
+          "results": 1
+        }
+      ]
+    },
+    {
+      "id": "price",
+      "name": "Precio",
+      "type": "range",
+      "values": [
+        {
+          "id": "*-300000.0",
+          "name": "Hasta $300.000",
+          "results": 49
+        },
+        {
+          "id": "300000.0-550000.0",
+          "name": "$300.000 a $550.000",
+          "results": 77
+        },
+        {
+          "id": "550000.0-*",
+          "name": "Más de $550.000",
+          "results": 64
+        }
+      ]
+    },
+    {
+      "id": "accepts_mercadopago",
+      "name": "Filtro por MercadoPago",
+      "type": "boolean",
+      "values": [
+        {
+          "id": "yes",
+          "name": "Con MercadoPago",
+          "results": 190
+        }
+      ]
+    },
+    {
+      "id": "installments",
+      "name": "Pago",
+      "type": "text",
+      "values": [
+        {
+          "id": "yes",
+          "name": "En cuotas",
+          "results": 190
+        },
+        {
+          "id": "no_interest",
+          "name": "Cuotas sin interés",
+          "results": 46
+        }
+      ]
+    },
+    {
+      "id": "shipping",
+      "name": "Envío",
+      "type": "text",
+      "values": [
+        {
+          "id": "mercadoenvios",
+          "name": "Mercado Envíos",
+          "results": 189
+        }
+      ]
+    },
+    {
+      "id": "power_seller",
+      "name": "Filtro por calidad de vendedores",
+      "type": "boolean",
+      "values": [
+        {
+          "id": "yes",
+          "name": "Mejores vendedores",
+          "results": 9
+        }
+      ]
+    },
+    {
+      "id": "since",
+      "name": "Filtro por fecha de comienzo",
+      "type": "text",
+      "values": [
+        {
+          "id": "today",
+          "name": "Publicados hoy",
+          "results": 5
+        }
+      ]
+    },
+    {
+      "id": "has_video",
+      "name": "Filtro por publicaciones con video",
+      "type": "boolean",
+      "values": [
+        {
+          "id": "yes",
+          "name": "Publicaciones con video",
+          "results": 9
+        }
+      ]
+    },
+    {
+      "id": "has_pictures",
+      "name": "Filtro por publicaciones con imágenes",
+      "type": "boolean",
+      "values": [
+        {
+          "id": "yes",
+          "name": "Con fotos",
+          "results": 190
+        }
+      ]
+    },
+    {
+      "id": "shipping_cost",
+      "name": "Costo de envío",
+      "type": "text",
+      "values": [
+        {
+          "id": "free",
+          "name": "Gratis",
+          "results": 139
+        }
+      ]
+    },
+    {
+      "id": "ITEM_CONDITION",
+      "name": "Condición",
+      "type": "STRING",
+      "values": [
+        {
+          "id": "2230284",
+          "name": "Nuevo",
+          "results": 96
+        },
+        {
+          "id": "2230581",
+          "name": "Usado",
+          "results": 94
+        }
+      ]
+    },
+    {
+      "id": "LINE",
+      "name": "Línea",
+      "type": "STRING",
+      "values": [
+        {
+          "id": "59187",
+          "name": "Moto",
+          "results": 109
+        },
+        {
+          "id": "3073863",
+          "name": "Moto G",
+          "results": 54
+        }
+      ]
+    },
+    {
+      "id": "MODEL",
+      "name": "Modelo",
+      "type": "STRING",
+      "values": [
+        {
+          "id": "8074",
+          "name": "G6",
+          "results": 66
+        },
+        {
+          "id": "2876818",
+          "name": "G6 Play",
+          "results": 26
+        },
+        {
+          "id": "2915826",
+          "name": "G6 Plus",
+          "results": 25
+        },
+        {
+          "id": "2815330",
+          "name": "G6 Plus Dual SIM",
+          "results": 22
+        },
+        {
+          "id": "483571",
+          "name": "G6 Dual SIM",
+          "results": 15
+        },
+        {
+          "id": "2876819",
+          "name": "G6 Play Dual SIM",
+          "results": 7
+        },
+        {
+          "id": "84612",
+          "name": "6 Plus",
+          "results": 3
+        },
+        {
+          "id": "4910834",
+          "name": "G6 Forge",
+          "results": 2
+        },
+        {
+          "id": "1249911",
+          "name": "G5S Plus",
+          "results": 2
+        },
+        {
+          "id": "59833",
+          "name": "6",
+          "results": 1
+        },
+        {
+          "id": "2228",
+          "name": "G5",
+          "results": 1
+        },
+        {
+          "id": "14254",
+          "name": "2020",
+          "results": 1
+        }
+      ]
+    }
+  ]
+}
