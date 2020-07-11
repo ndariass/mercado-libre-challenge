@@ -36,22 +36,22 @@ class ProductsUiManagerTest {
     fun test_getDisplayErrorMessage() {
         assertEquals(
             context.getString(R.string.products_search_error_not_found),
-            subject.getDisplayErrorMessage(Error.NOT_FOUND)
+            subject.getInitialLoadError(Error.NOT_FOUND)
         )
 
         assertEquals(
             context.getString(R.string.products_search_error_network),
-            subject.getDisplayErrorMessage(Error.NETWORK_ERROR)
+            subject.getInitialLoadError(Error.NETWORK_ERROR)
         )
 
         assertEquals(
             context.getString(R.string.products_search_error_general),
-            subject.getDisplayErrorMessage(Error.GENERAL_ERROR)
+            subject.getInitialLoadError(Error.GENERAL_ERROR)
         )
 
         assertEquals(
             context.getString(R.string.products_search_error_general),
-            subject.getDisplayErrorMessage(null)
+            subject.getInitialLoadError(null)
         )
     }
 

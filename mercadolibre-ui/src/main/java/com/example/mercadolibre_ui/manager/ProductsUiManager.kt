@@ -17,17 +17,34 @@ import javax.inject.Singleton
 @Singleton
 class ProductsUiManager @Inject constructor(private val context: Context) {
 
+    var number = 0
+
     /**
-     * Returns the error message to be displayed to the user based on the response
+     * Returns the error message to be displayed to the user when there is an error at the first
+     * load of product search results
      *
-     * @param response the response from the repository
+     * @param error the [Error] instance returned by the repository
      * @return the message to be displayed to the user
      */
-    fun getDisplayErrorMessage(error: Error?): String =
+    fun getInitialLoadError(error: Error?): String =
         when (error) {
             Error.NOT_FOUND -> context.getString(R.string.products_search_error_not_found)
             Error.NETWORK_ERROR -> context.getString(R.string.products_search_error_network)
             else -> context.getString(R.string.products_search_error_general)
+        }
+
+    /**
+     * Returns the error message to be displayed to the user when there is an error when loading a
+     * page different to the first one when loading product search results
+     *
+     * @param error the [Error] instance returned by the repository
+     * @return the message to be displayed to the user
+     */
+    fun getRangeLoadError(error: Error?): String? =
+        when (error) {
+            Error.NETWORK_ERROR -> context.getString(R.string.products_range_load_error_network)
+            Error.NOT_FOUND -> null
+            else -> context.getString(R.string.products_range_load_error_general)
         }
 
     /**
@@ -38,7 +55,7 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
     fun buildUiProduct(product: Product): UiProduct =
         UiProduct(
             id = product.id,
-            title = product.title,
+            title = "${number++} ---- ${product.title}",
             price = getPrice(product),
             condition = getCondition(product.condition),
             thumbnail = product.thumbnail,

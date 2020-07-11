@@ -11,12 +11,13 @@
     <string name="products_search_stock_available">Stock disponible</string>
     <string name="products_search_stock_not_available">Agotado</string>
     <string name="products_search_hint">Buscar en Mercado Libre</string>
+    <string name="products_range_load_error_network">Hubo un error al intentar cargar los demás productos. Revisa tu conexión a internet y vuelve a intentarlo.</string>
+    <string name="products_range_load_error_general">Hubo un error al intentar cargar los demás productos. Vuelve a intentarlo.</string>
     <plurals name="products_search_sold_items">
         <item quantity="one">%d vendido</item>
         <item quantity="other">%d vendidos</item>
     </plurals>
 
     <!-- Product detail screen -->
-    <string name="product_detail_purchase">Comprar</string>
     <string name="product_detail_label">Producto</string>
 </resources>

@@ -38,14 +38,6 @@ val DIFF_CALLBACK: DiffUtil.ItemCallback<UiProduct> = object : DiffUtil.ItemCall
  */
 class ProductsAdapter : PagedListAdapter<UiProduct, ProductListItemViewHolder>(DIFF_CALLBACK) {
 
-    /*
-    var data: List<UiProduct> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-     */
-
     var itemClickListener: ((uiProduct: UiProduct) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListItemViewHolder {

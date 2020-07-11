@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.mercadolibre_ui.adapter.ProductsSearchDataSourceFactory
-import com.example.mercadolibre_ui.manager.ProductsUiManager
 import com.example.mercadolibre_ui.model.UiProduct
-import kotlinx.coroutines.Job
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,36 +19,39 @@ private const val PAGE_SIZE = 20
  */
 @Singleton
 class ProductsSearchViewModel @Inject constructor(
-    private val productsUiManager: ProductsUiManager,
     private val dataSourceFactory: ProductsSearchDataSourceFactory
 ) :
     ViewModel() {
 
     private lateinit var _productDetailNavigation: MutableLiveData<UiProduct>
-    private lateinit var _error: MutableLiveData<String>
+    private lateinit var _initialLoadError: MutableLiveData<String>
+    private lateinit var _rangeLoadError: MutableLiveData<String?>
 
     lateinit var productDetailNavigation: LiveData<UiProduct>
-    lateinit var error: LiveData<String>
-
-    private var job: Job? = null
+    lateinit var initialLoadError: LiveData<String>
+    lateinit var rangeLoadError: LiveData<String?>
 
     fun init() {
         _productDetailNavigation = MutableLiveData()
-        _error = MutableLiveData()
+        _initialLoadError = MutableLiveData()
+        _rangeLoadError = MutableLiveData()
 
         productDetailNavigation = _productDetailNavigation
-        error = _error
+        initialLoadError = _initialLoadError
+        rangeLoadError = _rangeLoadError
     }
 
     fun searchProducts(query: String): LiveData<PagedList<UiProduct>> {
         val config = PagedList.Config.Builder()
             .setPageSize(PAGE_SIZE)
+            .setEnablePlaceholders(false)
             .build()
 
         return LivePagedListBuilder(
             dataSourceFactory.apply {
                 searchQuery = query
-                errorLiveData = _error
+                initialLoadErrorLiveData = _initialLoadError
+                rangeLoadErrorLiveData = _rangeLoadError
             },
             config
         ).build()
@@ -58,16 +59,5 @@ class ProductsSearchViewModel @Inject constructor(
 
     fun navigateToProductDetail(uiProduct: UiProduct) {
         _productDetailNavigation.value = uiProduct
-    }
-
-    override fun onCleared() {
-        cancelOngoingJob()
-        super.onCleared()
-    }
-
-    private fun cancelOngoingJob() {
-        job?.apply {
-            if (!isCancelled) cancel()
-        }
     }
 }

@@ -8,6 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -104,11 +105,17 @@ class ProductsSearchFragment : Fragment() {
             viewModel.navigateToProductDetail(it)
         }
 
-        viewModel.error.observe(viewLifecycleOwner, Observer {
+        viewModel.initialLoadError.observe(viewLifecycleOwner, Observer {
             products_search_error.text = it
             products_search_error.visibility = VISIBLE
             products_search_loader.visibility = GONE
             products_search_recycler_view.visibility = GONE
+        })
+
+        viewModel.rangeLoadError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            }
         })
     }
 

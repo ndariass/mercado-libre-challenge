@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- *
+ * [PositionalDataSource] implementation to provide product search results for a paginated view
  *
  * @author Nicolás Arias
  */
@@ -22,7 +22,8 @@ class ProductsSearchPositionalDataSource @Inject constructor(
 ) : PositionalDataSource<UiProduct>() {
 
     var searchQuery: String? = null
-    var errorLiveData: MutableLiveData<String>? = null
+    var initialLoadErrorLiveData: MutableLiveData<String>? = null
+    var rangeLoadErrorLiveData: MutableLiveData<String?>? = null
 
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<UiProduct>) {
         if (searchQuery.isNullOrBlank()) {
@@ -39,6 +40,7 @@ class ProductsSearchPositionalDataSource @Inject constructor(
         if (response.successful && response.payload != null) {
             callback.onResult(response.payload!!.map(productsUiManager::buildUiProduct))
         } else {
+            rangeLoadErrorLiveData?.postValue(productsUiManager.getRangeLoadError(response.error))
             Log.d(
                 javaClass.name,
                 response.errorMessage ?: "There was an error loading next items for $searchQuery"
@@ -52,6 +54,7 @@ class ProductsSearchPositionalDataSource @Inject constructor(
             return
         }
 
+        productsUiManager.number = 0
         val response = productsRepository.searchProducts(searchQuery!!, params.pageSize, 0)
 
         if (response.successful && response.payload != null && response.totalElements != null) {
@@ -61,7 +64,7 @@ class ProductsSearchPositionalDataSource @Inject constructor(
                 response.totalElements!!
             )
         } else {
-            errorLiveData?.postValue(productsUiManager.getDisplayErrorMessage(response.error))
+            initialLoadErrorLiveData?.postValue(productsUiManager.getInitialLoadError(response.error))
             Log.d(
                 javaClass.name,
                 response.errorMessage ?: "There was an error searching $searchQuery"
@@ -75,7 +78,6 @@ class ProductsSearchPositionalDataSource @Inject constructor(
  *
  * @author Nicolás Arias
  */
-//TODO: Check first type
 @Singleton
 class ProductsSearchDataSourceFactory @Inject constructor(
     private val dataSource: ProductsSearchPositionalDataSource
@@ -83,10 +85,12 @@ class ProductsSearchDataSourceFactory @Inject constructor(
     DataSource.Factory<Int, UiProduct>() {
 
     var searchQuery: String? = null
-    var errorLiveData: MutableLiveData<String>? = null
+    var initialLoadErrorLiveData: MutableLiveData<String>? = null
+    var rangeLoadErrorLiveData: MutableLiveData<String?>? = null
 
     override fun create(): DataSource<Int, UiProduct> = dataSource.apply {
         searchQuery = this@ProductsSearchDataSourceFactory.searchQuery
-        errorLiveData = this@ProductsSearchDataSourceFactory.errorLiveData
+        initialLoadErrorLiveData = this@ProductsSearchDataSourceFactory.initialLoadErrorLiveData
+        rangeLoadErrorLiveData = this@ProductsSearchDataSourceFactory.rangeLoadErrorLiveData
     }
 }
