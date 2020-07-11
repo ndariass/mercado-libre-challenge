@@ -4,6 +4,7 @@ import com.example.mercadolibre_data.TestUtils.readFromFile
 import com.example.mercadolibre_data.TestUtils.readFromJson
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
+import com.example.mercadolibre_data.mapper.ProductMapper
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -17,8 +18,7 @@ import org.junit.Test
  */
 class ProductMapperTest {
 
-    private val subject =
-        ProductMapper()
+    private val subject = ProductMapper()
 
     @Test
     fun test_map_Given_AllFieldsPresent_Then_ReturnNonNullModel() {
@@ -100,7 +100,6 @@ class ProductMapperTest {
 
         assertNull(subject.map(resultDto))
     }
-
 
     @Test
     fun test_map_Given_OptionalAttributesAreInvalid_Then_ReturnModelWithNullFields() {

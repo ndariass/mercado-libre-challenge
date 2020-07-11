@@ -7,10 +7,21 @@ package com.example.mercadolibre_domain.model
  */
 data class Response<T>(
     val payload: T?,
-    val totalElements: Int?,
+    val paging: Paging?,
     val successful: Boolean,
     val error: Error?,
     val errorMessage: String?
+)
+
+/**
+ * Pagination information related to a response
+ *
+ * @author Nicolás Arias
+ */
+data class Paging(
+    val totalElements: Int,
+    val offset: Int,
+    val pageSize: Int
 )
 
 /**

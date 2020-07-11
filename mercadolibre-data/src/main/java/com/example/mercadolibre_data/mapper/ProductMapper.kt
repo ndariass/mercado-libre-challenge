@@ -1,4 +1,4 @@
-package com.example.mercadolibre_data.repository
+package com.example.mercadolibre_data.mapper
 
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_domain.model.Product

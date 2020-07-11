@@ -1,8 +1,11 @@
 package com.example.mercadolibre_data.repository
 
 import com.example.mercadolibre_data.dto.ProductResponseDto
+import com.example.mercadolibre_data.mapper.PagingMapper
+import com.example.mercadolibre_data.mapper.ProductMapper
 import com.example.mercadolibre_data.network.ProductsRestApi
 import com.example.mercadolibre_domain.model.Error
+import com.example.mercadolibre_domain.model.Paging
 import com.example.mercadolibre_domain.model.Product
 import com.example.mercadolibre_domain.model.Response
 import com.example.mercadolibre_domain.repository.ProductsRepository
@@ -18,7 +21,8 @@ import javax.inject.Singleton
 @Singleton
 class RestApiProductsRepository @Inject constructor(
     private val restApi: ProductsRestApi,
-    private val mapper: ProductMapper
+    private val productMapper: ProductMapper,
+    private val pagingMapper: PagingMapper
 ) :
     ProductsRepository {
 
@@ -46,7 +50,7 @@ class RestApiProductsRepository @Inject constructor(
             } else {
                 Response(
                     payload = null,
-                    totalElements = null,
+                    paging = null,
                     error = Error.GENERAL_ERROR,
                     successful = false,
                     errorMessage = apiResponse?.errorBody()?.string() ?: GENERAL_ERROR_MESSAGE
@@ -55,7 +59,7 @@ class RestApiProductsRepository @Inject constructor(
         } catch (e: IOException) {
             Response(
                 payload = null,
-                totalElements = null,
+                paging = null,
                 successful = false,
                 error = Error.NETWORK_ERROR,
                 errorMessage = e.message
@@ -68,15 +72,15 @@ class RestApiProductsRepository @Inject constructor(
 
         val responseBody = apiResponse.body()
 
-        val searchResults = responseBody?.results?.mapNotNull(mapper::map)
-        val pagingTotalElements = responseBody?.paging?.total
+        val searchResults = responseBody?.results?.mapNotNull(productMapper::map)
+        val paging = pagingMapper.map(responseBody?.paging)
 
-        return if (searchResults != null && pagingTotalElements != null) {
-            buildResponseFromNonNullResult(searchResults, pagingTotalElements)
+        return if (searchResults != null && paging != null) {
+            buildResponseFromNonNullResult(searchResults, paging)
         } else {
             Response<List<Product>>(
                 payload = null,
-                totalElements = null,
+                paging = null,
                 error = Error.GENERAL_ERROR,
                 successful = false,
                 errorMessage = GENERAL_ERROR_MESSAGE
@@ -86,12 +90,12 @@ class RestApiProductsRepository @Inject constructor(
 
     private fun buildResponseFromNonNullResult(
         products: List<Product>,
-        totalElements: Int
+        paging: Paging
     ): Response<List<Product>> {
         if (products.isEmpty()) {
             return Response(
                 payload = null,
-                totalElements = null,
+                paging = null,
                 error = Error.NOT_FOUND,
                 successful = false,
                 errorMessage = "No results found"
@@ -99,7 +103,7 @@ class RestApiProductsRepository @Inject constructor(
         } else {
             return Response(
                 payload = products,
-                totalElements = totalElements,
+                paging = paging,
                 error = null,
                 successful = true,
                 errorMessage = null

@@ -3,14 +3,18 @@ package com.example.mercadolibre_ui.adapter
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.example.mercadolibre_domain.model.Product
+import com.example.mercadolibre_domain.model.Response
 import com.example.mercadolibre_domain.repository.ProductsRepository
 import com.example.mercadolibre_ui.manager.ProductsUiManager
 import com.example.mercadolibre_ui.model.UiProduct
 import javax.inject.Inject
 import javax.inject.Singleton
 
+const val PAGE_SIZE = 20
+
 /**
- *
+ * [PageKeyedDataSource] implementation to search products using pagination
  *
  * @author Nicolás Arias
  */
@@ -18,8 +22,7 @@ import javax.inject.Singleton
 class ProductsSearchPagedDataSource @Inject constructor(
     private val productsRepository: ProductsRepository,
     private val productsUiManager: ProductsUiManager
-) :
-    PageKeyedDataSource<Int, UiProduct>() {
+) : PageKeyedDataSource<Int, UiProduct>() {
 
     var searchQuery: String? = null
     var initialLoadErrorLiveData: MutableLiveData<String>? = null
@@ -36,18 +39,17 @@ class ProductsSearchPagedDataSource @Inject constructor(
 
         //TODO: remove
         productsUiManager.number = 0
-        //TODO: set constant for 20
-        val response = productsRepository.searchProducts(searchQuery!!, 20, 0)
+        val response = productsRepository.searchProducts(searchQuery!!, PAGE_SIZE, 0)
 
-        if (response.successful && response.payload != null && response.totalElements != null) {
+        if (isResponseValid(response)) {
             val uiProducts = response.payload!!.map(productsUiManager::buildUiProduct)
 
             callback.onResult(
-                uiProducts.take(19),
+                uiProducts,
                 0,
-                response.totalElements!!,
+                response.paging!!.totalElements,
                 null,
-                uiProducts.size
+                response.paging!!.pageSize
             )
         } else {
             initialLoadErrorLiveData?.postValue(productsUiManager.getInitialLoadError(response.error))
@@ -66,13 +68,13 @@ class ProductsSearchPagedDataSource @Inject constructor(
 
         val response = productsRepository.searchProducts(
             searchQuery!!,
-            20,
+            PAGE_SIZE,
             params.key
         )
 
-        if (response.successful && response.payload != null) {
+        if (isResponseValid(response)) {
             val uiProducts = response.payload!!.map(productsUiManager::buildUiProduct)
-            callback.onResult(uiProducts.take(19), params.key + uiProducts.size)
+            callback.onResult(uiProducts, params.key + response.paging!!.pageSize)
         } else {
             rangeLoadErrorLiveData?.postValue(productsUiManager.getRangeLoadError(response.error))
             Log.d(
@@ -85,4 +87,9 @@ class ProductsSearchPagedDataSource @Inject constructor(
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, UiProduct>) {
         // Not implemented
     }
+
+    private fun isResponseValid(response: Response<List<Product>>) =
+        response.successful
+                && response.payload != null
+                && response.paging != null
 }
