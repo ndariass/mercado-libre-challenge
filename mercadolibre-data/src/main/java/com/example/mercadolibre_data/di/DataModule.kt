@@ -13,6 +13,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Singleton
 
+private const val BASE_URL = "https://api.mercadolibre.com/"
+
 /**
  * Dagger module class for the data layer
  *
@@ -36,7 +38,7 @@ class DataModule {
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.mercadolibre.com/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
             .build()
 

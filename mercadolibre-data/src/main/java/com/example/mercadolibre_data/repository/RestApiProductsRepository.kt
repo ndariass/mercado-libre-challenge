@@ -23,7 +23,7 @@ class RestApiProductsRepository @Inject constructor(
     ProductsRepository {
 
     companion object {
-        internal const val UNKNOWN_CAUSE = "Unknown cause"
+        internal const val GENERAL_ERROR_MESSAGE = "There was an error executing the request"
     }
 
     /**
@@ -49,7 +49,7 @@ class RestApiProductsRepository @Inject constructor(
                     totalElements = null,
                     error = Error.GENERAL_ERROR,
                     successful = false,
-                    errorMessage = apiResponse?.errorBody()?.string() ?: UNKNOWN_CAUSE
+                    errorMessage = apiResponse?.errorBody()?.string() ?: GENERAL_ERROR_MESSAGE
                 )
             }
         } catch (e: IOException) {
@@ -66,8 +66,7 @@ class RestApiProductsRepository @Inject constructor(
     private fun buildResultFromSuccessfulApiResponse(apiResponse: retrofit2.Response<ProductResponseDto?>)
             : Response<List<Product>> {
 
-        val responseBody = apiResponse
-            .body()
+        val responseBody = apiResponse.body()
 
         val searchResults = responseBody?.results?.mapNotNull(mapper::map)
         val pagingTotalElements = responseBody?.paging?.total
@@ -80,7 +79,7 @@ class RestApiProductsRepository @Inject constructor(
                 totalElements = null,
                 error = Error.GENERAL_ERROR,
                 successful = false,
-                errorMessage = UNKNOWN_CAUSE
+                errorMessage = GENERAL_ERROR_MESSAGE
             )
         }
     }

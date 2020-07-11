@@ -4,7 +4,7 @@ import com.example.mercadolibre_data.dto.PagingDto
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
 import com.example.mercadolibre_data.network.ProductsRestApi
-import com.example.mercadolibre_data.repository.RestApiProductsRepository.Companion.UNKNOWN_CAUSE
+import com.example.mercadolibre_data.repository.RestApiProductsRepository.Companion.GENERAL_ERROR_MESSAGE
 import com.example.mercadolibre_domain.model.Error
 import com.example.mercadolibre_domain.model.Product
 import okhttp3.ResponseBody
@@ -137,7 +137,7 @@ class RestApiProductsRepositoryTest {
             assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.GENERAL_ERROR, error)
-            assertEquals(UNKNOWN_CAUSE, errorMessage)
+            assertEquals(GENERAL_ERROR_MESSAGE, errorMessage)
         }
     }
 
@@ -166,7 +166,7 @@ class RestApiProductsRepositoryTest {
             assertNull(totalElements)
             assertFalse(successful)
             assertEquals(Error.GENERAL_ERROR, error)
-            assertEquals(UNKNOWN_CAUSE, errorMessage)
+            assertEquals(GENERAL_ERROR_MESSAGE, errorMessage)
         }
     }
 

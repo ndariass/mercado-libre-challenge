@@ -53,6 +53,7 @@ class ProductsSearchPositionalDataSource @Inject constructor(
             return
         }
 
+        //TODO: remove
         productsUiManager.number = 0
         val response = productsRepository.searchProducts(searchQuery!!, params.pageSize, 0)
 
