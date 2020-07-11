@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.mercadolibre_ui.adapter.ProductsSearchDataSourceFactory
+import com.example.mercadolibre_ui.adapter.ProductsSearchPagedDataSourceFactory
 import com.example.mercadolibre_ui.model.UiProduct
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ private const val PREFETCH_DISTANCE = 20
  */
 @Singleton
 class ProductsSearchViewModel @Inject constructor(
-    private val dataSourceFactory: ProductsSearchDataSourceFactory
+    private val dataSourceFactory: ProductsSearchPagedDataSourceFactory
 ) :
     ViewModel() {
 

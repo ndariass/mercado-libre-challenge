@@ -12,18 +12,18 @@ import javax.inject.Singleton
  * @author Nicolás Arias
  */
 @Singleton
-class ProductsSearchDataSourceFactory @Inject constructor(
-    private val dataSource: ProductsSearchPositionalDataSource
-) :
-    DataSource.Factory<Int, UiProduct>() {
+class ProductsSearchPagedDataSourceFactory @Inject constructor(
+    private val dataSource: ProductsSearchPagedDataSource
+) : DataSource.Factory<Int, UiProduct>() {
 
     var searchQuery: String? = null
     var initialLoadErrorLiveData: MutableLiveData<String>? = null
     var rangeLoadErrorLiveData: MutableLiveData<String?>? = null
 
     override fun create(): DataSource<Int, UiProduct> = dataSource.apply {
-        searchQuery = this@ProductsSearchDataSourceFactory.searchQuery
-        initialLoadErrorLiveData = this@ProductsSearchDataSourceFactory.initialLoadErrorLiveData
-        rangeLoadErrorLiveData = this@ProductsSearchDataSourceFactory.rangeLoadErrorLiveData
+        searchQuery = this@ProductsSearchPagedDataSourceFactory.searchQuery
+        initialLoadErrorLiveData =
+            this@ProductsSearchPagedDataSourceFactory.initialLoadErrorLiveData
+        rangeLoadErrorLiveData = this@ProductsSearchPagedDataSourceFactory.rangeLoadErrorLiveData
     }
 }
