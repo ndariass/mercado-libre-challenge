@@ -2,7 +2,6 @@ package com.example.mercadolibre_ui.adapter
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PositionalDataSource
 import com.example.mercadolibre_domain.repository.ProductsRepository
 import com.example.mercadolibre_ui.manager.ProductsUiManager
@@ -70,27 +69,5 @@ class ProductsSearchPositionalDataSource @Inject constructor(
                 response.errorMessage ?: "There was an error searching $searchQuery"
             )
         }
-    }
-}
-
-/**
- * [DataSource.Factory] implementation to return an instance of [ProductsSearchPositionalDataSource]
- *
- * @author Nicolás Arias
- */
-@Singleton
-class ProductsSearchDataSourceFactory @Inject constructor(
-    private val dataSource: ProductsSearchPositionalDataSource
-) :
-    DataSource.Factory<Int, UiProduct>() {
-
-    var searchQuery: String? = null
-    var initialLoadErrorLiveData: MutableLiveData<String>? = null
-    var rangeLoadErrorLiveData: MutableLiveData<String?>? = null
-
-    override fun create(): DataSource<Int, UiProduct> = dataSource.apply {
-        searchQuery = this@ProductsSearchDataSourceFactory.searchQuery
-        initialLoadErrorLiveData = this@ProductsSearchDataSourceFactory.initialLoadErrorLiveData
-        rangeLoadErrorLiveData = this@ProductsSearchDataSourceFactory.rangeLoadErrorLiveData
     }
 }
