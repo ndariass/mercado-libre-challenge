@@ -2,6 +2,7 @@ package com.example.mercadolibre_ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,10 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.adapter.ProductsAdapter
 import com.example.mercadolibre_ui.util.hideKeyboard
+import com.example.mercadolibre_ui.util.showKeyboard
 import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
 import com.example.mercadolibre_ui.viewmodel.ViewModelFactory
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_error
+import kotlinx.android.synthetic.main.fragment_products_search.products_search_input_layout
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_input_text
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_loader
 import kotlinx.android.synthetic.main.fragment_products_search.products_search_recycler_view
@@ -71,6 +74,12 @@ class ProductsSearchFragment : Fragment() {
 
         setUpRecyclerView()
 
+        products_search_input_layout.setEndIconOnClickListener {
+            products_search_input_text.setText("")
+            products_search_input_text.requestFocus()
+            showKeyboard(products_search_input_text)
+        }
+
         products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 hideKeyboard(view)
@@ -81,19 +90,7 @@ class ProductsSearchFragment : Fragment() {
                 if (query.isBlank()) {
                     false
                 } else {
-                    products_search_loader.visibility = VISIBLE
-                    products_search_recycler_view.visibility = GONE
-                    products_search_error.visibility = GONE
-                    productsAdapter.submitList(null)
-
-                    viewModel.searchProducts(query).observe(viewLifecycleOwner, Observer {
-                        if (!it.isEmpty()) {
-                            products_search_recycler_view.post { productsAdapter.submitList(it) }
-                            products_search_error.visibility = GONE
-                            products_search_loader.visibility = GONE
-                            products_search_recycler_view.visibility = VISIBLE
-                        }
-                    })
+                    runSearch(query)
                     true
                 }
             } else {
@@ -127,5 +124,21 @@ class ProductsSearchFragment : Fragment() {
             DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
                 .apply(this::addItemDecoration)
         }
+    }
+
+    private fun runSearch(query: String) {
+        products_search_loader.visibility = VISIBLE
+        products_search_recycler_view.visibility = GONE
+        products_search_error.visibility = GONE
+        productsAdapter.submitList(null)
+
+        viewModel.searchProducts(query).observe(viewLifecycleOwner, Observer {
+            if (!it.isEmpty()) {
+                products_search_recycler_view.post { productsAdapter.submitList(it) }
+                products_search_error.visibility = GONE
+                products_search_loader.visibility = GONE
+                products_search_recycler_view.visibility = VISIBLE
+            }
+        })
     }
 }

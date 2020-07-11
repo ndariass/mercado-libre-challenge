@@ -55,7 +55,6 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
     fun buildUiProduct(product: Product): UiProduct =
         UiProduct(
             id = getId(product),
-            //title = "${number++} ---- ${product.title}",
             title = getTitle(product),
             price = getPrice(product),
             condition = getCondition(product.condition),
@@ -71,7 +70,8 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
     private fun getId(product: Product) = product.id ?: product.hashCode().toString()
 
     private fun getTitle(product: Product) =
-        product.title ?: context.getString(R.string.product_default_title)
+        //product.title? ?: context.getString(R.string.product_default_title)
+        product.title?.run { "$this ---- ${number++}" } ?: context.getString(R.string.product_default_title)
 
     private fun getPrice(product: Product) =
         product.price?.run {

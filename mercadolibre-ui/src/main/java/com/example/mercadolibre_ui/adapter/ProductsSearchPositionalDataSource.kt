@@ -56,6 +56,7 @@ class ProductsSearchPositionalDataSource @Inject constructor(
         //TODO: remove
         productsUiManager.number = 0
         val response = productsRepository.searchProducts(searchQuery!!, params.pageSize, 0)
+
         if (response.successful && response.payload != null && response.totalElements != null) {
             callback.onResult(
                 response.payload!!.map(productsUiManager::buildUiProduct),

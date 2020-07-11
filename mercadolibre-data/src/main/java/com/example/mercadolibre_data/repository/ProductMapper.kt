@@ -20,24 +20,23 @@ class ProductMapper @Inject constructor() {
      * @return the mapped instance or null if the input is null
      */
     fun map(dto: ProductDto?): Product? =
-        dto
-            ?.run {
-                Product(
-                    id = id,
-                    title = title,
-                    price = price,
-                    currencyId = currencyId,
-                    availableQuantity = availableQuantity,
-                    soldQuantity = soldQuantity,
-                    condition = mapCondition(condition),
-                    thumbnail = thumbnail,
-                    installments = mapInstallments(installments),
-                    address = mapAddress(address),
-                    shipping = mapShipping(shipping),
-                    attributes = mapAttributes(attributes),
-                    originalPrice = originalPrice
-                )
-            }
+        dto?.run {
+            Product(
+                id = id,
+                title = title,
+                price = price,
+                currencyId = currencyId,
+                availableQuantity = availableQuantity,
+                soldQuantity = soldQuantity,
+                condition = mapCondition(condition),
+                thumbnail = thumbnail,
+                installments = mapInstallments(installments),
+                address = mapAddress(address),
+                shipping = mapShipping(shipping),
+                attributes = mapAttributes(attributes),
+                originalPrice = originalPrice
+            )
+        }
 
     private fun mapCondition(condition: String?): Product.Condition? =
         Product.Condition.values().find { it.value == condition }

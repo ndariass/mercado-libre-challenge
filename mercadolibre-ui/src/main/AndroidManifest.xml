@@ -6,12 +6,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.ProductsSearchActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
             android:name=".activity.ProductDetailActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/product_detail_label" />
-        <activity
-            android:name=".activity.ProductsSearchActivity"
-            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>
