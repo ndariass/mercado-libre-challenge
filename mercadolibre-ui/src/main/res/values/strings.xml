@@ -9,7 +9,7 @@
     <string name="product_default_title"><![CDATA[<Sin descripción>]]></string>
 
     <!-- Products search screen -->
-    <string name="products_search_error_not_found">Tu búsqeda no arrojó resultados</string>
+    <string name="products_search_error_not_found">Tu búsqueda no arrojó resultados</string>
     <string name="products_search_error_network">Revisa tu conexión a internet y vuelve a intentarlo</string>
     <string name="products_search_error_general">Hubo un error al realizar la búsqueda. Inténtalo de nuevo</string>
     <string name="products_search_hint">Buscar en Mercado Libre</string>
