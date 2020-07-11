@@ -73,30 +73,7 @@ class ProductsSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
-
-        products_search_input_layout.setEndIconOnClickListener {
-            products_search_input_text.setText("")
-            products_search_input_text.requestFocus()
-            showKeyboard(products_search_input_text)
-        }
-
-        products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                hideKeyboard(view)
-                products_search_input_text.clearFocus()
-
-                val query = textView.text.toString()
-
-                if (query.isBlank()) {
-                    false
-                } else {
-                    runSearch(query)
-                    true
-                }
-            } else {
-                false
-            }
-        }
+        setUpInputLayout(view)
 
         productsAdapter.itemClickListener = {
             viewModel.navigateToProductDetail(it)
@@ -123,6 +100,32 @@ class ProductsSearchFragment : Fragment() {
             adapter = productsAdapter
             DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
                 .apply(this::addItemDecoration)
+        }
+    }
+
+    private fun setUpInputLayout(view: View) {
+        products_search_input_layout.setEndIconOnClickListener {
+            products_search_input_text.setText("")
+            products_search_input_text.requestFocus()
+            showKeyboard(products_search_input_text)
+        }
+
+        products_search_input_text.setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard(view)
+                products_search_input_text.clearFocus()
+
+                val query = textView.text.toString()
+
+                if (query.isBlank()) {
+                    false
+                } else {
+                    runSearch(query)
+                    true
+                }
+            } else {
+                false
+            }
         }
     }
 

@@ -37,8 +37,6 @@ class ProductsSearchPagedDataSource @Inject constructor(
             return
         }
 
-        //TODO: remove
-        productsUiManager.number = 0
         val response = productsRepository.searchProducts(searchQuery!!, PAGE_SIZE, 0)
 
         if (isResponseValid(response)) {

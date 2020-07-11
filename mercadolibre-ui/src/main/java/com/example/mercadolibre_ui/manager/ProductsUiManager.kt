@@ -17,8 +17,6 @@ import javax.inject.Singleton
 @Singleton
 class ProductsUiManager @Inject constructor(private val context: Context) {
 
-    var number = 0
-
     /**
      * Returns the error message to be displayed to the user when there is an error at the first
      * load of product search results
@@ -55,7 +53,7 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
     fun buildUiProduct(product: Product): UiProduct =
         UiProduct(
             id = product.id,
-            title = "${number++} ---- ${product.title}",
+            title = product.title,
             price = getPrice(product),
             condition = getCondition(product.condition),
             thumbnail = getThumbnail(product),
