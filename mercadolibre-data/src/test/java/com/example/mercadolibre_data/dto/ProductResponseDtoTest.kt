@@ -24,6 +24,7 @@ class ProductResponseDtoTest {
 
         assertEquals(1, resultDto.results!!.size)
 
+        //TODO: test paging
         resultDto.results!![0]!!.apply {
             assertEquals("MCO481185321", id)
             assertEquals("Motorola Moto G6 Octacore 32gb 3ram Huella 4g Dualcam 2018", title)

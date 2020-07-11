@@ -54,11 +54,12 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
      */
     fun buildUiProduct(product: Product): UiProduct =
         UiProduct(
-            id = product.id,
-            title = "${number++} ---- ${product.title}",
+            id = getId(product),
+            //title = "${number++} ---- ${product.title}",
+            title = getTitle(product),
             price = getPrice(product),
             condition = getCondition(product.condition),
-            thumbnail = product.thumbnail,
+            thumbnail = getThumbnail(product),
             installments = getInstallments(product),
             freeShipping = getFreeShipping(product),
             detailOverview = getDetailOverview(product),
@@ -67,20 +68,31 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
             attributes = getAttributes(product)
         )
 
+    private fun getId(product: Product) = product.id ?: product.hashCode().toString()
+
+    private fun getTitle(product: Product) =
+        product.title ?: context.getString(R.string.product_default_title)
+
     private fun getPrice(product: Product) =
-        context.getString(R.string.products_search_price, product.price.formatNoDecimals())
+        product.price?.run {
+            context.getString(R.string.product_price, product.price!!.formatNoDecimals())
+        } ?: context.getString(R.string.product_default_price)
 
     private fun getCondition(condition: Product.Condition?): String? =
         when (condition) {
-            Product.Condition.NEW -> context.getString(R.string.products_search_condition_new)
-            Product.Condition.USED -> context.getString(R.string.products_search_condition_used)
+            Product.Condition.NEW -> context.getString(R.string.product_condition_new)
+            Product.Condition.USED -> context.getString(R.string.product_condition_used)
             else -> null
         }
+
+    private fun getThumbnail(product: Product): String? =
+        if (product.thumbnail.isNullOrBlank()) null
+        else product.thumbnail
 
     private fun getInstallments(product: Product) =
         product.installments?.run {
             context.getString(
-                R.string.products_search_installments,
+                R.string.product_installments,
                 quantity,
                 amount.formatNoDecimals()
             )
@@ -88,7 +100,7 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
 
     private fun getFreeShipping(product: Product) =
         if (product.shipping.freeShipping) {
-            context.getString(R.string.products_search_free_shipping)
+            context.getString(R.string.product_free_shipping)
         } else {
             null
         }
@@ -100,8 +112,8 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
     private fun getStockAvailable(product: Product) =
         product.availableQuantity
             ?.run {
-                if (this > 0) context.getString(R.string.products_search_stock_available)
-                else context.getString(R.string.products_search_stock_not_available)
+                if (this > 0) context.getString(R.string.product_stock_available)
+                else context.getString(R.string.product_stock_not_available)
             }
 
     private fun getAttributes(product: Product): List<UiProduct.Attribute> =

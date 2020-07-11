@@ -6,10 +6,10 @@ package com.example.mercadolibre_domain.model
  * @author Nicolás Arias
  */
 data class Product(
-    val id: String,
-    val title: String,
-    val price: Float,
-    val currencyId: String,
+    val id: String?,
+    val title: String?,
+    val price: Float?,
+    val currencyId: String?,
     val availableQuantity: Int?,
     val soldQuantity: Int?,
     val condition: Condition?,

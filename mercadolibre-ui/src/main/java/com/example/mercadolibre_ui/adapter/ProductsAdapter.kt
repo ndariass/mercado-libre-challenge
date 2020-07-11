@@ -60,7 +60,6 @@ class ProductsAdapter : PagedListAdapter<UiProduct, ProductListItemViewHolder>(D
             Picasso.get()
                 .load(item.thumbnail)
                 .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
                 .into(item_list_thumbnail)
 
             setOnClickListener {

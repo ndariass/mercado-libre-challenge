@@ -11,6 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val PAGE_SIZE = 20
+private const val PREFETCH_DISTANCE = 20
 
 /**
  * [ViewModel] implementation for products search
@@ -44,6 +45,7 @@ class ProductsSearchViewModel @Inject constructor(
     fun searchProducts(query: String): LiveData<PagedList<UiProduct>> {
         val config = PagedList.Config.Builder()
             .setPageSize(PAGE_SIZE)
+            .setPrefetchDistance(PREFETCH_DISTANCE)
             .setEnablePlaceholders(false)
             .build()
 

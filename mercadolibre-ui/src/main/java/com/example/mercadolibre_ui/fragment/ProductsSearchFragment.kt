@@ -120,7 +120,6 @@ class ProductsSearchFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-
         products_search_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
             productsAdapter = ProductsAdapter()

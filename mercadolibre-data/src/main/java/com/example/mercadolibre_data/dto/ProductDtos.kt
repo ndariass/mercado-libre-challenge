@@ -1,6 +1,6 @@
 package com.example.mercadolibre_data.dto
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
@@ -29,11 +29,11 @@ data class ProductDto(
     val id: String?,
     val title: String?,
     val price: Float?,
-    @JsonProperty("currency_id")
+    @SerializedName("currency_id")
     val currencyId: String?,
-    @JsonProperty("available_quantity")
+    @SerializedName("available_quantity")
     val availableQuantity: Int?,
-    @JsonProperty("sold_quantity")
+    @SerializedName("sold_quantity")
     val soldQuantity: Int?,
     val condition: String?,
     val thumbnail: String?,
@@ -41,7 +41,7 @@ data class ProductDto(
     val address: Address?,
     val shipping: Shipping?,
     val attributes: List<Attribute?>?,
-    @JsonProperty("original_price")
+    @SerializedName("original_price")
     val originalPrice: Float?
 
 ) : Serializable {
@@ -52,7 +52,7 @@ data class ProductDto(
     data class Installments(
         val quantity: Int?,
         val amount: Float?,
-        @JsonProperty("currency_id")
+        @SerializedName("currency_id")
         val currencyId: String?
     ) : Serializable {
         companion object {
@@ -61,9 +61,9 @@ data class ProductDto(
     }
 
     data class Address(
-        @JsonProperty("state_name")
+        @SerializedName("state_name")
         val stateName: String?,
-        @JsonProperty("city_name")
+        @SerializedName("city_name")
         val cityName: String?
     ) : Serializable {
         companion object {
@@ -72,9 +72,9 @@ data class ProductDto(
     }
 
     data class Shipping(
-        @JsonProperty("free_shipping")
+        @SerializedName("free_shipping")
         val freeShipping: Boolean?,
-        @JsonProperty("store_pick_up")
+        @SerializedName("store_pick_up")
         val storePickUp: Boolean?
     ) : Serializable {
         companion object {
@@ -84,7 +84,7 @@ data class ProductDto(
 
     data class Attribute(
         val name: String?,
-        @JsonProperty("value_name")
+        @SerializedName("value_name")
         val valueName: String?
     ) : Serializable {
         companion object {

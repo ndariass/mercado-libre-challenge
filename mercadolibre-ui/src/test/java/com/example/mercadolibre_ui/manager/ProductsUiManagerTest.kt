@@ -8,7 +8,6 @@ import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.extension.formatNoDecimals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,6 +25,8 @@ class ProductsUiManagerTest {
 
     private lateinit var context: Context
 
+    private val productWithoutFields = buildTestProduct()
+
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
@@ -33,7 +34,7 @@ class ProductsUiManagerTest {
     }
 
     @Test
-    fun test_getDisplayErrorMessage() {
+    fun test_getInitialLoadError() {
         assertEquals(
             context.getString(R.string.products_search_error_not_found),
             subject.getInitialLoadError(Error.NOT_FOUND)
@@ -56,8 +57,27 @@ class ProductsUiManagerTest {
     }
 
     @Test
+    fun test_getRangeLoadError() {
+        assertEquals(
+            context.getString(R.string.products_range_load_error_network),
+            subject.getRangeLoadError(Error.NETWORK_ERROR)
+        )
+
+        assertEquals(
+            context.getString(R.string.products_range_load_error_general),
+            subject.getRangeLoadError(Error.GENERAL_ERROR)
+        )
+
+        assertNull(subject.getRangeLoadError(Error.NOT_FOUND))
+    }
+
+    @Test
     fun test_buildUiProduct() {
         val product = buildTestProduct(
+            id = "id",
+            title = "Title",
+            price = 599000f,
+            currencyId = "COP",
             availableQuantity = 2,
             soldQuantity = 1,
             condition = Product.Condition.USED,
@@ -79,7 +99,7 @@ class ProductsUiManagerTest {
         subject.buildUiProduct(product).apply {
             assertEquals(product.id, id)
             assertEquals(product.title, title)
-            assertEquals("$ ${product.price.formatNoDecimals()}", price)
+            assertEquals("$ ${product.price!!.formatNoDecimals()}", price)
             assertEquals("Usado", condition)
             assertEquals(product.thumbnail, thumbnail)
             assertEquals("36x $ ${product.installments!!.amount.formatNoDecimals()}", installments)
@@ -95,23 +115,54 @@ class ProductsUiManagerTest {
     }
 
     @Test
-    fun test_buildUiProduct_OnlyMandatoryFields() {
-        val product = buildTestProduct()
+    fun test_buildUiProduct_Id() {
+        val productWithId = buildTestProduct(id = "id")
+        val productWithoutId = buildTestProduct(
+            title = "Title",
+            price = 25000f,
+            thumbnail = "https://thumbnail"
+        )
 
-        subject.buildUiProduct(product).apply {
-            assertEquals(product.id, id)
-            assertEquals(product.title, title)
-            assertEquals("$ ${product.price.formatNoDecimals()}", price)
+        assertEquals("id", subject.buildUiProduct(productWithId).id)
+        assertEquals(
+            productWithoutId.hashCode().toString(),
+            subject.buildUiProduct(productWithoutId).id
+        )
+    }
 
-            assertNull(condition)
-            assertNull(thumbnail)
-            assertNull(installments)
-            assertNull(freeShipping)
-            assertNull(detailOverview)
-            assertNull(availabilityLabel)
-            assertNull(address)
-            assertTrue(attributes.isEmpty())
-        }
+    @Test
+    fun test_buildUiProduct_Title() {
+        val productWithTitle = buildTestProduct(title = "Title")
+
+        assertEquals("Title", subject.buildUiProduct(productWithTitle).title)
+        assertEquals(
+            context.getString(R.string.product_default_title),
+            subject.buildUiProduct(productWithoutFields).title
+        )
+    }
+
+    @Test
+    fun test_buildUiProduct_Price() {
+        val productWithPrice = buildTestProduct(price = 25000f)
+
+        assertEquals(
+            "$ ${productWithPrice.price!!.formatNoDecimals()}",
+            subject.buildUiProduct(productWithPrice).price
+        )
+        assertEquals(
+            context.getString(R.string.product_default_price),
+            subject.buildUiProduct(productWithoutFields).price
+        )
+    }
+
+    @Test
+    fun test_buildUiProduct_Thumbnail() {
+        assertNull(subject.buildUiProduct(buildTestProduct(thumbnail = null)).detailOverview)
+        assertNull(subject.buildUiProduct(buildTestProduct(thumbnail = "  ")).detailOverview)
+        assertEquals(
+            "http://thumbnail",
+            subject.buildUiProduct(buildTestProduct(thumbnail = "http://thumbnail")).thumbnail
+        )
     }
 
     @Test
@@ -155,6 +206,10 @@ class ProductsUiManagerTest {
     }
 
     private fun buildTestProduct(
+        id: String? = null,
+        title: String? = null,
+        price: Float? = null,
+        currencyId: String? = null,
         availableQuantity: Int? = null,
         soldQuantity: Int? = null,
         condition: Product.Condition? = null,
@@ -166,10 +221,10 @@ class ProductsUiManagerTest {
         originalPrice: Float? = null
     ): Product =
         Product(
-            id = "id",
-            title = "Title",
-            price = 599000f,
-            currencyId = "COP",
+            id = id,
+            title = title,
+            price = price,
+            currencyId = currencyId,
             availableQuantity = availableQuantity,
             soldQuantity = soldQuantity,
             condition = condition,

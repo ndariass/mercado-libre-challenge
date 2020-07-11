@@ -3,14 +3,10 @@ package com.example.mercadolibre_data.di
 import com.example.mercadolibre_data.network.ProductsRestApi
 import com.example.mercadolibre_data.repository.RestApiProductsRepository
 import com.example.mercadolibre_domain.repository.ProductsRepository
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.PropertyAccessor
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 private const val BASE_URL = "https://api.mercadolibre.com/"
@@ -31,15 +27,9 @@ class DataModule {
     @Provides
     @Singleton
     fun provideProductRestApi(): ProductsRestApi {
-        val objectMapper = jacksonObjectMapper().apply {
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)
-            setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
-        }
-
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         return retrofit.create(ProductsRestApi::class.java)
