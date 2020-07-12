@@ -8,7 +8,8 @@ import java.io.Serializable
  *
  * @author Nicolás Arias
  */
-data class ProductResponseDto(val results: List<ProductDto?>?, val paging: PagingDto?) : Serializable {
+data class ProductResponseDto(val results: List<ProductDto?>?, val paging: PagingDto?) :
+    Serializable {
     companion object {
         private val serialVersionUID: Long = 98962651L
     }

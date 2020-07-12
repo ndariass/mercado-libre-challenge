@@ -1,6 +1,5 @@
 package com.example.mercadolibre_data.network
 
-import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
 import retrofit2.Call
 import retrofit2.http.GET

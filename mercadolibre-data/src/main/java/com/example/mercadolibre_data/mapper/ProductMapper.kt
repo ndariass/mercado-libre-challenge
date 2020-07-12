@@ -42,7 +42,6 @@ class ProductMapper @Inject constructor() {
         listOf(dto.id, dto.title, dto.currencyId).all { !it.isNullOrBlank() }
                 && dto.price != null
 
-
     private fun mapCondition(condition: String?): Product.Condition? =
         Product.Condition.values().find { it.value == condition }
 
