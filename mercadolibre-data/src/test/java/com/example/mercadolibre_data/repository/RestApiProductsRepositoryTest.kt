@@ -49,10 +49,10 @@ class RestApiProductsRepositoryTest {
     private lateinit var pagingMapper: PagingMapper
 
     @Mock
-    private lateinit var call: Call<*>
+    private lateinit var call: Call<ProductResponseDto?>
 
     @Mock
-    private lateinit var apiResponse: Response<*>
+    private lateinit var apiResponse: Response<ProductResponseDto?>
 
     @Mock
     private lateinit var productDto: ProductDto
@@ -78,8 +78,8 @@ class RestApiProductsRepositoryTest {
     @Test
     fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_AndPagingIsPresent_Then_ReturnResultWithPayload() {
         `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
-            .thenReturn(call as Call<ProductResponseDto?>?)
-        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+            .thenReturn(call)
+        `when`(call.execute()).thenReturn(apiResponse)
         `when`(apiResponse.isSuccessful).thenReturn(true)
         `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto), pagingDto))
         `when`(productMapper.map(productDto)).thenReturn(product)
@@ -99,7 +99,7 @@ class RestApiProductsRepositoryTest {
     fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_AndPagingInfoIsNotPresent_Then_ReturnResultWithOutPayload() {
         `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
             .thenReturn(call as Call<ProductResponseDto?>?)
-        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+        `when`(call.execute()).thenReturn(apiResponse)
         `when`(apiResponse.isSuccessful).thenReturn(true)
         `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto), pagingDto))
         `when`(productMapper.map(productDto)).thenReturn(product)
@@ -117,7 +117,7 @@ class RestApiProductsRepositoryTest {
     fun test_SearchProducts_Given_CallIsSuccessful_And_NoDtoIsMapped_Then_ReturnResultWithoutPayload() {
         `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
             .thenReturn(call as Call<ProductResponseDto?>?)
-        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+        `when`(call.execute()).thenReturn(apiResponse)
         `when`(apiResponse.isSuccessful).thenReturn(true)
         `when`(apiResponse.body()).thenReturn(ProductResponseDto(listOf(productDto), pagingDto))
         `when`(productMapper.map(productDto)).thenReturn(null)
@@ -141,7 +141,7 @@ class RestApiProductsRepositoryTest {
                 offset = OFFSET
             )
         ).thenReturn(call as Call<ProductResponseDto?>?)
-        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+        `when`(call.execute()).thenReturn(apiResponse)
         `when`(apiResponse.isSuccessful).thenReturn(true)
         `when`(apiResponse.body()).thenReturn(ProductResponseDto(null, null))
 
@@ -163,7 +163,7 @@ class RestApiProductsRepositoryTest {
                 offset = OFFSET
             )
         ).thenReturn(call as Call<ProductResponseDto?>?)
-        `when`(call.execute()).thenReturn(apiResponse as Response<List<ProductDto?>?>?)
+        `when`(call.execute()).thenReturn(apiResponse)
         `when`(apiResponse.isSuccessful).thenReturn(true)
         `when`(apiResponse.body()).thenReturn(ProductResponseDto(emptyList(), pagingDto))
         `when`(pagingMapper.map(pagingDto)).thenReturn(paging)

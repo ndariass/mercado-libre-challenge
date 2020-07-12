@@ -1,12 +1,11 @@
 <resources>
-    <string name="product_price">"$ %s"</string>
+    <string name="product_price" formatted="false">"$ %s"</string>
     <string name="product_condition_new">Nuevo</string>
     <string name="product_condition_used">Usado</string>
-    <string name="product_installments">%dx $ %s</string>
+    <string name="product_installments" formatted="false">%dx $ %s</string>
     <string name="product_free_shipping">Envío gratis</string>
     <string name="product_stock_available">Stock disponible</string>
     <string name="product_stock_not_available">Agotado</string>
-    <string name="product_default_title"><![CDATA[<Sin descripción>]]></string>
 
     <!-- Products search screen -->
     <string name="products_search_error_not_found">Tu búsqueda no arrojó resultados</string>
@@ -22,5 +21,4 @@
 
     <!-- Product detail screen -->
     <string name="product_detail_label">Producto</string>
-    <string name="product_default_price"><![CDATA[<Sin precio>]]></string>
 </resources>
