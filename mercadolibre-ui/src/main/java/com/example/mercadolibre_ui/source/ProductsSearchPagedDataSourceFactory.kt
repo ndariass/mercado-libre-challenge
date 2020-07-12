@@ -1,4 +1,4 @@
-package com.example.mercadolibre_ui.adapter
+package com.example.mercadolibre_ui.source
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -20,10 +20,9 @@ class ProductsSearchPagedDataSourceFactory @Inject constructor(
     var initialLoadErrorLiveData: MutableLiveData<String>? = null
     var rangeLoadErrorLiveData: MutableLiveData<String?>? = null
 
-    override fun create(): DataSource<Int, UiProduct> = dataSource.apply {
-        searchQuery = this@ProductsSearchPagedDataSourceFactory.searchQuery
-        initialLoadErrorLiveData =
-            this@ProductsSearchPagedDataSourceFactory.initialLoadErrorLiveData
-        rangeLoadErrorLiveData = this@ProductsSearchPagedDataSourceFactory.rangeLoadErrorLiveData
+    override fun create(): DataSource<Int, UiProduct> = dataSource.also {
+        it.searchQuery = searchQuery
+        it.initialLoadErrorLiveData = initialLoadErrorLiveData
+        it.rangeLoadErrorLiveData = rangeLoadErrorLiveData
     }
 }

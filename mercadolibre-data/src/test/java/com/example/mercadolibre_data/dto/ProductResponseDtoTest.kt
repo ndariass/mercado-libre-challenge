@@ -4,6 +4,7 @@ import com.example.mercadolibre_data.TestUtils.readFromFile
 import com.example.mercadolibre_data.TestUtils.readFromJson
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -22,9 +23,14 @@ class ProductResponseDtoTest {
             clazz = ProductResponseDto::class.java
         )
 
+        resultDto.paging!!.run {
+            assertEquals(190, total)
+            assertEquals(40, offset)
+            assertEquals(20, limit)
+        }
+
         assertEquals(1, resultDto.results!!.size)
 
-        //TODO: test paging
         resultDto.results!![0]!!.apply {
             assertEquals("MCO481185321", id)
             assertEquals("Motorola Moto G6 Octacore 32gb 3ram Huella 4g Dualcam 2018", title)
@@ -89,14 +95,34 @@ class ProductResponseDtoTest {
     }
 
     @Test
-    fun test_Deserialize_MissingResultField() {
+    fun test_Deserialize_MissingPagingFields() {
         val resultDto = readFromJson(
             json = "{" +
+                    "\"paging\": {}" +
+                    "}",
+            clazz = ProductResponseDto::class.java
+        )
+
+        assertNotNull(resultDto.paging)
+
+        resultDto.paging!!.apply {
+            assertNull(total)
+            assertNull(offset)
+            assertNull(limit)
+        }
+    }
+
+    @Test
+    fun test_Deserialize_MissingRootFields() {
+        val resultDto = readFromJson(
+            json = "{" +
+                    "\"paging\": null," +
                     "\"results\": null" +
                     "}",
             clazz = ProductResponseDto::class.java
         )
 
         assertNull(resultDto.results)
+        assertNull(resultDto.paging)
     }
 }

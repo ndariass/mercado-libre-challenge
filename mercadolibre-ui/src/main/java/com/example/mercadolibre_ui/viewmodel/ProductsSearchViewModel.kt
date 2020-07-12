@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.mercadolibre_ui.adapter.ProductsSearchPagedDataSourceFactory
+import com.example.mercadolibre_ui.source.ProductsSearchPagedDataSourceFactory
 import com.example.mercadolibre_ui.model.UiProduct
 import javax.inject.Inject
 import javax.inject.Singleton

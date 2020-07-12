@@ -1,4 +1,4 @@
-package com.example.mercadolibre_ui.adapter
+package com.example.mercadolibre_ui.source
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -37,25 +37,39 @@ class ProductsSearchPagedDataSource @Inject constructor(
             return
         }
 
-        val response = productsRepository.searchProducts(searchQuery!!, PAGE_SIZE, 0)
+        val response = productsRepository.searchProducts(
+            searchQuery!!,
+            PAGE_SIZE, 0
+        )
 
         if (isResponseValid(response)) {
-            val uiProducts = response.payload!!.map(productsUiManager::buildUiProduct)
-
-            callback.onResult(
-                uiProducts,
-                0,
-                response.paging!!.totalElements,
-                null,
-                response.paging!!.pageSize
-            )
+            notifyLoadInitialResult(response, callback)
         } else {
-            initialLoadErrorLiveData?.postValue(productsUiManager.getInitialLoadError(response.error))
-            Log.d(
-                javaClass.name,
-                response.errorMessage ?: "There was an error searching $searchQuery"
-            )
+            notifyLoadInitialError(response)
         }
+    }
+
+    private fun notifyLoadInitialResult(
+        response: Response<List<Product>>,
+        callback: LoadInitialCallback<Int, UiProduct>
+    ) {
+        val uiProducts = response.payload!!.map(productsUiManager::buildUiProduct)
+
+        callback.onResult(
+            uiProducts,
+            0,
+            response.paging!!.totalElements,
+            null,
+            response.paging!!.pageSize
+        )
+    }
+
+    private fun notifyLoadInitialError(response: Response<List<Product>>) {
+        initialLoadErrorLiveData?.postValue(productsUiManager.getInitialLoadError(response.error))
+        Log.d(
+            javaClass.name,
+            response.errorMessage ?: "There was an error searching $searchQuery"
+        )
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, UiProduct>) {
@@ -71,15 +85,27 @@ class ProductsSearchPagedDataSource @Inject constructor(
         )
 
         if (isResponseValid(response)) {
-            val uiProducts = response.payload!!.map(productsUiManager::buildUiProduct)
-            callback.onResult(uiProducts, params.key + response.paging!!.pageSize)
+            notifyLoadAfterResult(response, callback, params)
         } else {
-            rangeLoadErrorLiveData?.postValue(productsUiManager.getRangeLoadError(response.error))
-            Log.d(
-                javaClass.name,
-                response.errorMessage ?: "There was an error loading next items for $searchQuery"
-            )
+            notifyLoadAfterError(response)
         }
+    }
+
+    private fun notifyLoadAfterResult(
+        response: Response<List<Product>>,
+        callback: LoadCallback<Int, UiProduct>,
+        params: LoadParams<Int>
+    ) {
+        val uiProducts = response.payload!!.map(productsUiManager::buildUiProduct)
+        callback.onResult(uiProducts, params.key + response.paging!!.pageSize)
+    }
+
+    private fun notifyLoadAfterError(response: Response<List<Product>>) {
+        rangeLoadErrorLiveData?.postValue(productsUiManager.getRangeLoadError(response.error))
+        Log.d(
+            javaClass.name,
+            response.errorMessage ?: "There was an error loading next items for $searchQuery"
+        )
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, UiProduct>) {

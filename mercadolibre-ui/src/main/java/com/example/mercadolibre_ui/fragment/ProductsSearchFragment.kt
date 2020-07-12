@@ -79,18 +79,7 @@ class ProductsSearchFragment : Fragment() {
             viewModel.navigateToProductDetail(it)
         }
 
-        viewModel.initialLoadError.observe(viewLifecycleOwner, Observer {
-            products_search_error.text = it
-            products_search_error.visibility = VISIBLE
-            products_search_loader.visibility = GONE
-            products_search_recycler_view.visibility = GONE
-        })
-
-        viewModel.rangeLoadError.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-            }
-        })
+        listenErrors()
     }
 
     private fun setUpRecyclerView() {
@@ -141,6 +130,21 @@ class ProductsSearchFragment : Fragment() {
                 products_search_error.visibility = GONE
                 products_search_loader.visibility = GONE
                 products_search_recycler_view.visibility = VISIBLE
+            }
+        })
+    }
+
+    private fun listenErrors() {
+        viewModel.initialLoadError.observe(viewLifecycleOwner, Observer {
+            products_search_error.text = it
+            products_search_error.visibility = VISIBLE
+            products_search_loader.visibility = GONE
+            products_search_recycler_view.visibility = GONE
+        })
+
+        viewModel.rangeLoadError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             }
         })
     }

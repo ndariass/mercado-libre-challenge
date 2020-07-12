@@ -1,7 +1,7 @@
 package com.example.mercadolibre_domain.model
 
 /**
- * Generic class to return responses from repository classses
+ * Generic class to return responses from repository classes
  *
  * @author Nicolás Arias
  */

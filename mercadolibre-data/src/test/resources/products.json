@@ -3,8 +3,8 @@
   "query": "Motorola G6",
   "paging": {
     "total": 190,
-    "offset": 0,
-    "limit": 2,
+    "offset": 40,
+    "limit": 20,
     "primary_results": 76
   },
   "results": [

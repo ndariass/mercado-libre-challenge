@@ -32,7 +32,7 @@ val DIFF_CALLBACK: DiffUtil.ItemCallback<UiProduct> = object : DiffUtil.ItemCall
 }
 
 /**
- * [ListAdapter] implementation to display a list of products
+ * [PagedListAdapter] implementation to display a list of products
  *
  * @author Nicolás Arias
  */

@@ -1,10 +1,9 @@
-package com.example.mercadolibre_data.repository
+package com.example.mercadolibre_data.mapper
 
 import com.example.mercadolibre_data.TestUtils.readFromFile
 import com.example.mercadolibre_data.TestUtils.readFromJson
 import com.example.mercadolibre_data.dto.ProductDto
 import com.example.mercadolibre_data.dto.ProductResponseDto
-import com.example.mercadolibre_data.mapper.ProductMapper
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull

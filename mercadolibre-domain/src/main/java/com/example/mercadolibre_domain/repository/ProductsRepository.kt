@@ -17,7 +17,7 @@ interface ProductsRepository {
      * @param query the search query to find matching products
      * @param pageSize the maximum number of items to retrieve
      * @param offset the start position to get the items
-     * @return a [List] containing the matching products
+     * @return a [Response] instance containing the search result
      */
     fun searchProducts(query: String, pageSize: Int, offset: Int): Response<List<Product>>
 }
