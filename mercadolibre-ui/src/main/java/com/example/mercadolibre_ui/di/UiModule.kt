@@ -1,7 +1,5 @@
 package com.example.mercadolibre_ui.di
 
-import android.app.Application
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mercadolibre_ui.activity.ProductsSearchActivity

@@ -34,11 +34,11 @@
         android:id="@+id/products_search_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_list_product"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/products_search_input_layout" />
+        app:layout_constraintTop_toBottomOf="@id/products_search_input_layout"
+        tools:listitem="@layout/item_list_product" />
 
     <TextView
         android:id="@+id/products_search_error"

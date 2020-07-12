@@ -2,9 +2,9 @@ package com.example.mercadolibre_ui.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.example.mercadolibre_ui.model.UiProduct
 import com.example.mercadolibre_ui.source.ProductsSearchPagedDataSource
 import com.example.mercadolibre_ui.source.ProductsSearchPagedDataSourceFactory
-import com.example.mercadolibre_ui.model.UiProduct
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
