@@ -1,6 +1,7 @@
 package com.example.mercadolibre_ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mercadolibre_ui.R
@@ -17,7 +18,13 @@ class ProductDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val uiProduct = intent.getSerializableExtra(PRODUCT_KEY) as? UiProduct
-        uiProduct?.let(this::addFragment) ?: finish()
+        uiProduct?.let(this::addFragment) ?: run {
+            Log.d(
+                ProductDetailActivity::class.java.name,
+                "Unable to retrieve uiProduct from intent. Finishing the activity"
+            )
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
