@@ -1,5 +1,5 @@
 # Desafío técnico - Mercado Libre
-Versión simplificada de la aplicación móvil de Mercado Libre para Android, desarrollada como reto técnico para aplicar al cargo de desarrollador móvil.
+Versión simplificada de la aplicación móvil de Mercado Libre para Android desarrollada como reto técnico para aplicar al cargo de desarrollador móvil.
 
 ## Descripción general
 La aplicación permite buscar productos dado un criterio usando la API pública de Mercado Libre, así como mostrar un detalle de cada producto. La aplicación cuenta con dos vistas:
@@ -35,39 +35,19 @@ Todos los módulos, excepto **mercadolibre-domain**, son librerías de Android y
 La aplicación usa varias libreras de Android y de terceros con el fin de simplificar el desarrollo. En todos los casos se trata de librerías ampliamente usadas por la comunidad.
 
 ### Código de producción
-#### Retrofit
-Simplifica el codigo necesario para la comunicación con la API REST.
-
-#### Gson
-Deserialización del resultado de la API REST. En lugar de Gson se consideró también Jackson, que en general se conoce por ser más rápida que la primera. Sin embargo, de acuerdo a las pruebas realizadas se notó que Gson resultó ser ligeramente más eficiente, particularmente al realizar la primera consulta luego de iniciar el proceso de la aplicación.
-
-#### Dagger y Dagger Android
-Se encargan de la creación e inyección de las dependencias de la aplicación en todos los módulos.
-
-#### Architecture components - View Model y Live Data
-Usadas para la implementación de la capa *view model* de acuerdo a la arquitectura de la aplicación. El uso de *live data* permite notificar eventos a las vistas considerando su ciclo de vida.
-
-#### AndroidX - Paging
-Implementación de *scroll* infinito para los resultados de la búsqueda. La librería permite la implementación de una fuente de datos que entrega resultados a medida que el usuario se desplaza en la lista.
-
-#### Material
-Incluye los componentes `TextInputLayout` y `TextInputEditText` usados para el ingreso del criterio de búsqueda en la primera vista de la aplicación. Estos componentes permiten la configuración de un *hint*, un ícono para limpiar el texto y la acción correspondiente para configurar el campo de texto como un campo de búsqueda.
-
-#### Picasso
-Carga de imágenes desde internet.
+* **Retrofit:** simplifica el codigo necesario para la comunicación con la API REST.
+* **Gson:** deserialización del resultado de la API REST. En lugar de Gson se consideró también Jackson, que en general se conoce por ser más rápida que la primera. Sin embargo, de acuerdo a las pruebas realizadas se notó que Gson resultó ser ligeramente más eficiente, particularmente al realizar la primera consulta luego de iniciar el proceso de la aplicación.
+* **Dagger y Dagger Android:** se encargan de la creación e inyección de las dependencias de la aplicación en todos los módulos.
+* **Architecture components - View Model y Live Data:** usadas para la implementación de la capa *view model* de acuerdo a la arquitectura de la aplicación. El uso de *live data* permite notificar eventos a las vistas considerando su ciclo de vida.
+* **AndroidX - Paging:** implementación de *scroll* infinito para los resultados de la búsqueda. La librería permite la implementación de una fuente de datos que entrega resultados a medida que el usuario se desplaza en la lista.
+* **Material:** incluye los componentes `TextInputLayout` y `TextInputEditText` usados para el ingreso del criterio de búsqueda en la primera vista de la aplicación. Estos componentes permiten la configuración de un *hint*, un ícono para limpiar el texto y la acción correspondiente para configurar el campo de texto como un campo de búsqueda.
+* **Picasso:** carga de imágenes desde internet.
 
 ### Código de pruebas
-#### JUnit
-*Framework* para la ejecución de pruebas unitarias.
-
-#### Mockito
-Creación de *mocks* de las dependencias de cada clase a probar, según se requiera.
-
-#### Robolectric
-Necesaria para la ejecución de pruebas unitarias en casos de que se use clases del *framework* de Android, por ejemplo `Log` o `Context`.
-
-#### Core testing
-Utilidades de Android para pruebas unitarias. Se necesita, por ejemplo, para proveer instancias de la clase `Context`.
+* **JUnit:** *framework* para la ejecución de pruebas unitarias.
+* **Mockito:** creación de *mocks* de las dependencias de cada clase a probar, según se requiera.
+* **Robolectric:** necesaria para la ejecución de pruebas unitarias en casos de que se use clases del *framework* de Android, por ejemplo `Log` o `Context`.
+* **Core testing:** utilidades de Android para pruebas unitarias. Se necesita, por ejemplo, para proveer instancias de la clase `Context`.
 
 ## Manejo de errores
 ### Desde el punto de vista del usuario
