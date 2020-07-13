@@ -25,6 +25,11 @@ import kotlinx.android.synthetic.main.fragment_product_detail.product_detail_tit
 const val PRODUCT_DETAIL_FRAGMENT_TAG = "ProductDetailFragmentTag"
 const val PRODUCT_KEY = "PRODUCT_KEY"
 
+/**
+ * [Fragment] implementation to display the detail of a product
+ *
+ * @author Nicolás Arias
+ */
 class ProductDetailFragment : Fragment() {
 
     companion object {

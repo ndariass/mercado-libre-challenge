@@ -21,8 +21,7 @@ private const val PREFETCH_DISTANCE = 20
 @Singleton
 class ProductsSearchViewModel @Inject constructor(
     private val dataSourceFactory: ProductsSearchPagedDataSourceFactory
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private lateinit var _productDetailNavigation: MutableLiveData<UiProduct>
     private lateinit var _initialLoadError: MutableLiveData<String>

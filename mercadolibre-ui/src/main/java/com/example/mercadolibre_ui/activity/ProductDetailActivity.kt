@@ -10,6 +10,11 @@ import com.example.mercadolibre_ui.fragment.PRODUCT_KEY
 import com.example.mercadolibre_ui.fragment.ProductDetailFragment
 import com.example.mercadolibre_ui.model.UiProduct
 
+/**
+ * [AppCompatActivity] implementation to display a product detail
+ *
+ * @author Nicolás Arias
+ */
 class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,16 +32,6 @@ class ProductDetailActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun addFragment(uiProduct: UiProduct) {
         supportFragmentManager.beginTransaction()
             .add(
@@ -45,5 +40,15 @@ class ProductDetailActivity : AppCompatActivity() {
                 PRODUCT_DETAIL_FRAGMENT_TAG
             )
             .commit()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

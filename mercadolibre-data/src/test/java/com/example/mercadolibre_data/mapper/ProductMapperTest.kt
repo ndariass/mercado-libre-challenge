@@ -101,7 +101,7 @@ class ProductMapperTest {
     }
 
     @Test
-    fun test_map_Given_OptionalAttributesAreInvalid_Then_ReturnModelWithNullFields() {
+    fun test_map_Given_OptionalAttributesAreInvalid_Then_ReturnModelWithNullOptionalFields() {
         val resultDto = readFromFile(
             path = "/products-wrong-fields.json",
             clazz = ProductResponseDto::class.java
@@ -116,7 +116,7 @@ class ProductMapperTest {
     }
 
     @Test
-    fun test_map_Given_AddressStateOrCityIsMissingIsNotValid_Then_ReturnAddress() {
+    fun test_map_Given_AddressStateOrCityIsMissing_Then_ReturnAddress() {
         val resultDto = readFromFile(
             path = "/products-missing-address-fields.json",
             clazz = ProductResponseDto::class.java

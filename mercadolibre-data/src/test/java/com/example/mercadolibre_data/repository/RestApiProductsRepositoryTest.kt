@@ -76,7 +76,7 @@ class RestApiProductsRepositoryTest {
     }
 
     @Test
-    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_AndPagingIsPresent_Then_ReturnResultWithPayload() {
+    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_And_PagingIsPresent_Then_ReturnResultWithPayload() {
         `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
             .thenReturn(call)
         `when`(call.execute()).thenReturn(apiResponse)
@@ -96,7 +96,7 @@ class RestApiProductsRepositoryTest {
     }
 
     @Test
-    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_AndPagingInfoIsNotPresent_Then_ReturnResultWithOutPayload() {
+    fun test_SearchProducts_Given_CallIsSuccessful_And_DtoIsMapped_And_PagingInfoIsNotPresent_Then_ReturnResultWithOutPayload() {
         `when`(restApi.searchProducts(query = "query", pageSize = PAGE_SIZE, offset = OFFSET))
             .thenReturn(call as Call<ProductResponseDto?>?)
         `when`(call.execute()).thenReturn(apiResponse)

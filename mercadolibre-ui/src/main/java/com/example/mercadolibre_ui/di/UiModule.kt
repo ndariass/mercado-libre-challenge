@@ -26,7 +26,7 @@ abstract class UiModule() {
     @Binds
     @IntoMap
     @ViewModelKey(ProductsSearchViewModel::class)
-    abstract fun bindOrdersViewModel(productsSearchViewModel: ProductsSearchViewModel): ViewModel
+    abstract fun bindProductsSearchViewModel(productsSearchViewModel: ProductsSearchViewModel): ViewModel
 
     @ContributesAndroidInjector
     abstract fun bindProductsSearchActivity(): ProductsSearchActivity

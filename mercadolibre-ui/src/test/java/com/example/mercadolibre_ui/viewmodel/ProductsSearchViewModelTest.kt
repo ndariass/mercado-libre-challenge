@@ -41,10 +41,7 @@ class ProductsSearchViewModelTest {
     @Before
     fun setUp() {
         initMocks(this)
-        dataSourceFactory =
-            ProductsSearchPagedDataSourceFactory(
-                dataSource
-            )
+        dataSourceFactory = ProductsSearchPagedDataSourceFactory(dataSource)
         subject = ProductsSearchViewModel(dataSourceFactory)
         subject.init()
     }
@@ -59,9 +56,10 @@ class ProductsSearchViewModelTest {
 
     @Test
     fun test_navigateToProductDetail() {
+        subject.productDetailNavigation.observeForever(observer)
+
         subject.navigateToProductDetail(uiProduct)
 
-        subject.productDetailNavigation.observeForever(observer)
         verify(observer).onChanged(uiProduct)
     }
 }

@@ -36,7 +36,7 @@ class ProductsUiManager @Inject constructor(private val context: Context) {
      * page different to the first one when loading product search results
      *
      * @param error the [Error] instance returned by the repository
-     * @return the message to be displayed to the user
+     * @return the message to be displayed to the user or null if no message is to be displayed
      */
     fun getRangeLoadError(error: Error?): String? =
         when (error) {

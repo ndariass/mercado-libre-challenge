@@ -1,4 +1,4 @@
-# Desafío técnico - Mercado Libre
+# Desafío técnico — Mercado Libre
 Versión simplificada de la aplicación móvil de Mercado Libre para Android desarrollada como reto técnico para aplicar al cargo de desarrollador móvil.
 
 ## Descripción general
@@ -47,7 +47,7 @@ La aplicación usa varias libreras de Android y de terceros con el fin de simpli
 * **JUnit:** *framework* para la ejecución de pruebas unitarias.
 * **Mockito:** creación de *mocks* de las dependencias de cada clase a probar, según se requiera.
 * **Robolectric:** necesaria para la ejecución de pruebas unitarias en casos de que se use clases del *framework* de Android, por ejemplo `Log` o `Context`.
-* **Core testing:** utilidades de Android para pruebas unitarias. Se necesita, por ejemplo, para proveer instancias de la clase `Context`.
+* **Core testing:** utilidades de Android para pruebas. Se necesita, por ejemplo, para proveer instancias de la clase `Context`.
 
 ## Manejo de errores
 ### Desde el punto de vista del usuario

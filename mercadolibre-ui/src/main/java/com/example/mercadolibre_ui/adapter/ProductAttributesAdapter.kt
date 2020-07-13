@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_product_attribute.view.item_product_a
 import kotlinx.android.synthetic.main.item_product_attribute.view.item_product_attribute_value
 
 /**
- * [RecyclerView.Adapter] implementation to display a list of product attributes
+ * [RecyclerView.Adapter] implementation to display a list of the attributes of a product
  *
  * @author Nicolás Arias
  */

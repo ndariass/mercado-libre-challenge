@@ -108,12 +108,12 @@ class ProductsSearchPagedDataSource @Inject constructor(
         )
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, UiProduct>) {
-        // Not implemented
-    }
-
     private fun isResponseValid(response: Response<List<Product>>) =
         response.successful
                 && response.payload != null
                 && response.paging != null
+
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, UiProduct>) {
+        // Not implemented
+    }
 }

@@ -6,6 +6,8 @@ import java.nio.file.Paths
 
 /**
  * Utilites for unit testing
+ *
+ * @author Nicolás Arias
  */
 object TestUtils {
     private val objectMapper = Gson()

@@ -10,6 +10,6 @@
     <dimen name="detail_header_text">22sp</dimen>
     <dimen name="detail_price_text">28sp</dimen>
     <dimen name="detail_content_text">16sp</dimen>
-    <dimen name="detail_label_text">14dp</dimen>
+    <dimen name="detail_label_text">14sp</dimen>
     <dimen name="error_text">28sp</dimen>
 </resources>

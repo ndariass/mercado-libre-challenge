@@ -23,8 +23,7 @@ class RestApiProductsRepository @Inject constructor(
     private val restApi: ProductsRestApi,
     private val productMapper: ProductMapper,
     private val pagingMapper: PagingMapper
-) :
-    ProductsRepository {
+) : ProductsRepository {
 
     companion object {
         internal const val GENERAL_ERROR_MESSAGE = "There was an error executing the request"

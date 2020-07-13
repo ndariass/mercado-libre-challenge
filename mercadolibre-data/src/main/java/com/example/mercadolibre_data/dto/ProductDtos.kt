@@ -15,6 +15,11 @@ data class ProductResponseDto(val results: List<ProductDto?>?, val paging: Pagin
     }
 }
 
+/**
+ * Data transfer object for the API response pagination information
+ *
+ * @author Nicolás Arias
+ */
 data class PagingDto(
     val total: Int?,
     val offset: Int?,
@@ -92,5 +97,4 @@ data class ProductDto(
             private val serialVersionUID: Long = 8798346516L
         }
     }
-
 }

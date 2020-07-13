@@ -8,6 +8,7 @@ import com.example.mercadolibre_ui.R
 import com.example.mercadolibre_ui.fragment.PRODUCTS_SEARCH_FRAGMENT_TAG
 import com.example.mercadolibre_ui.fragment.PRODUCT_KEY
 import com.example.mercadolibre_ui.fragment.ProductsSearchFragment
+import com.example.mercadolibre_ui.model.UiProduct
 import com.example.mercadolibre_ui.viewmodel.ProductsSearchViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -31,12 +32,8 @@ class ProductsSearchActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) addFragment()
 
-        productsSearchViewModel.productDetailNavigation.observe(this, Observer {
-            Intent(this, ProductDetailActivity::class.java).apply {
-                putExtra(PRODUCT_KEY, it)
-                startActivity(this)
-            }
-        })
+        productsSearchViewModel.productDetailNavigation
+            .observe(this, Observer(this::startProductDetailActivity))
     }
 
     private fun addFragment() {
@@ -47,5 +44,12 @@ class ProductsSearchActivity : AppCompatActivity() {
                 PRODUCTS_SEARCH_FRAGMENT_TAG
             )
             .commit()
+    }
+
+    private fun startProductDetailActivity(it: UiProduct) {
+        Intent(this, ProductDetailActivity::class.java).apply {
+            putExtra(PRODUCT_KEY, it)
+            startActivity(this)
+        }
     }
 }

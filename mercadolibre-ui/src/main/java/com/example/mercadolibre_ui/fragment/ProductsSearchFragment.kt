@@ -73,11 +73,6 @@ class ProductsSearchFragment : Fragment() {
 
         setUpRecyclerView()
         setUpInputLayout(view)
-
-        productsAdapter.itemClickListener = {
-            viewModel.navigateToProductDetail(it)
-        }
-
         listenErrors()
     }
 
@@ -89,6 +84,8 @@ class ProductsSearchFragment : Fragment() {
             DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
                 .apply(this::addItemDecoration)
         }
+
+        productsAdapter.itemClickListener = viewModel::navigateToProductDetail
     }
 
     private fun setUpInputLayout(view: View) {

@@ -48,10 +48,8 @@ class ProductMapper @Inject constructor() {
     private fun mapInstallments(installments: ProductDto.Installments?): Product.Installments? =
         installments
             ?.takeIf {
-                listOf(
-                    it.quantity,
-                    it.amount
-                ).all { it != null } && !it.currencyId.isNullOrBlank()
+                listOf(it.quantity, it.amount).all { it != null }
+                        && !it.currencyId.isNullOrBlank()
             }
             ?.run {
                 Product.Installments(

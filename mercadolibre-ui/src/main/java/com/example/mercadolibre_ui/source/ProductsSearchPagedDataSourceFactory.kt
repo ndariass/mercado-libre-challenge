@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * [DataSource.Factory] implementation to return an instance of [ProductsSearchPositionalDataSource]
+ * [DataSource.Factory] implementation to return an instance of [ProductsSearchPagedDataSource]
  *
  * @author Nicolás Arias
  */
