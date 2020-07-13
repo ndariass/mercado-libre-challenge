@@ -4,7 +4,7 @@ Versión simplificada de la aplicación móvil de Mercado Libre para Android des
 ## Descripción general
 La aplicación permite buscar productos dado un criterio usando la API pública de Mercado Libre, así como mostrar un detalle de cada producto. La aplicación cuenta con dos vistas:
 
-1. Ingreso del criterio de búsqueda y visualziación de resultados
+1. Ingreso del criterio de búsqueda y visualización de resultados
 2. Visualización del detalle de un producto
 
 La versión mínima soportada de Android es 5.0, con lo cual se cubre el 94.1 % del total de dispositivos que usan este sistema operativo.
@@ -46,7 +46,7 @@ La aplicación usa varias libreras de Android y de terceros con el fin de simpli
 ### Código de pruebas
 * **JUnit:** *framework* para la ejecución de pruebas unitarias.
 * **Mockito:** creación de *mocks* de las dependencias de cada clase a probar, según se requiera.
-* **Robolectric:** necesaria para la ejecución de pruebas unitarias en casos de que se use clases del *framework* de Android, por ejemplo `Log` o `Context`.
+* **Robolectric:** necesaria para la ejecución de pruebas unitarias en casos en los que se use clases del *framework* de Android, por ejemplo `Log` o `Context`.
 * **Core testing:** utilidades de Android para pruebas. Se necesita, por ejemplo, para proveer instancias de la clase `Context`.
 
 ## Manejo de errores
@@ -67,7 +67,7 @@ El método del repositorio retorna una instancia de la clase `Response`, definid
 * `errorMessage`, mensaje de error usado únicamente con fines de pruebas de desarrollo. Se define a partir del resultado de la consulta a la API; en caso de que no se pueda obtener se define un mensaje general. En la capa de UI este mensaje se muestra en los logs.
 
 ## Consideraciones generales
-* La aplicación únicamente hace uso del recurso de la API `sites/$SITE_ID/search`, que retorna el resultado de una búsqueda con algunos detalles de cada producto. A partir de este resultado se presenta la información en ambas vistas de la aplicación, lo cual se considera suficiente para el desarrollo de este reto técnico. Sin embargo, una solución más completa incluiría consultar los recursos `items/$ITEM_ID` y `reviews/item/$ITEM_ID`, con el fin de dar más información en la vista del detalle del producto, similar a como se hace en la aplicación real de Mercado Libre.
+* La aplicación hace uso únicamente del recurso de la API `sites/$SITE_ID/search`, que retorna el resultado de una búsqueda con algunos detalles de cada producto. A partir de este resultado se presenta la información en ambas vistas de la aplicación, lo cual se considera suficiente para el desarrollo de este reto técnico. Sin embargo, una solución más completa incluiría consultar los recursos `items/$ITEM_ID` y `reviews/item/$ITEM_ID`, con el fin de dar más información en la vista del detalle del producto, similar a como se hace en la aplicación real de Mercado Libre.
 * Todas las consultas se hacen al sitio de Colombia `MCO`, según lo configurado en la clase `ProductsRestApi`.
 * De acuerdo al objeto modelo del producto, definido en el módulo de dominio, el id, título y precio son obligatorios, tal que en la capa de datos se descartan los items que no cumplen esta condición. Normalmente este tipo de decisiones se toman con el equipo técnico y de producto, de modo que estas reglas podrían variar.
 * Considerando que en el módulo de UI la lógica de la vista se delega a la clase `ProductsUiManager`, es posible lograr una buena cobertura de pruebas escribiendo solo pruebas unitarias. De todos modos, en general es deseable escribir también pruebas de instrumentación sobre actividades, fragmentos, *adapters* y demás componentes de la vista.
