@@ -68,7 +68,7 @@ El método del repositorio retorna una instancia de la clase `Response`, definid
 
 ## Consideraciones generales
 * La aplicación únicamente hace uso del recurso de la API `sites/$SITE_ID/search`, que retorna el resultado de una búsqueda con algunos detalles de cada producto. A partir de este resultado se presenta la información en ambas vistas de la aplicación, lo cual se considera suficiente para el desarrollo de este reto técnico. Sin embargo, una solución más completa incluiría consultar los recursos `items/$ITEM_ID` y `reviews/item/$ITEM_ID`, con el fin de dar más información en la vista del detalle del producto, similar a como se hace en la aplicación real de Mercado Libre.
-* Todas las consultas se hacen al sitio de Colombia `MCO`, según lo configurado en la clase `ProductRestApi`.
+* Todas las consultas se hacen al sitio de Colombia `MCO`, según lo configurado en la clase `ProductsRestApi`.
 
 ## Autor
 * **Nicolás Arias** - [ndariass@unal.edu.co](mailto:ndariass@unal.edu.co)
